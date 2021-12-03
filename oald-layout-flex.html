@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>flex-dictionary</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
+    body {
+      display: flex;
+    }
+
+    aside {
+      width: 100px;
+      height: 100%;
+      background-color: red;
+    }
+
+    .right {
+      width: 200px;
+      height: 100%;
+      background-color: blue;
+    }
+
+    .right1 {
+      width: 200px;
+      height: 100%;
+      background-color: yellow;
+    }
+
+    .main {
+      flex-grow: 1;
+      height: 100%;
+      display: flex;
+      flex-flow: column;
+    }
+
+    .top {
+      height: 100px;
+      width: 100%;
+      background-color: aqua;
+    }
+
+    .bottom {
+      flex-grow: 1;
+      width: 100%;
+      background-color: skyblue;
+    }
+  </style>
+</head>
+
+<body>
+  <aside></aside>
+  <div class="main">
+    <div class="top"></div>
+    <div class="bottom"></div>
+  </div>
+  <div class="right"></div>
+  <div class="right1"></div>
+</body>
+
+</html>

@@ -1,0 +1,93 @@
+<script type="xxx">
+  function chunk(array, size) {
+    var final = []
+    var start = 0
+    var end = start + size
+    while (start < array.length) {
+      var finalitem = []
+      if (end > array.length - 1) {
+        for (let j = start; j < array.length; j++) {
+          finalitem.push(array[j])
+        }
+      }
+      else {
+        for (let i = start; i < end; i++) {
+          finalitem.push(array[i])
+        }
+      }
+      start = end
+      end = end + size
+      final.push(finalitem)
+    }
+    return final
+  }
+</script>
+
+<script type='xxx'>
+  function compact(array) {
+    for (num in array) {
+      if (array[num] == 0 || array[num] == '' || array[num] == null || array[num] == false || typeof (array[num]) == undefined)
+        array.splice(num, 1)
+    }
+    return array
+  }
+</script>
+<script type="xxx">
+  function concat() {
+    for (let i = 1; i < arguments.length; i++) {
+      if (Array.isArray(arguments[i])) {
+        array.push(...arguments[i])
+        } else
+        {
+         array.push(arguments[i])
+        }
+      }
+    return array
+  }
+</script>
+<script type="XXX">
+  function difference(array, values) {
+    var final = []
+    for (let i = 0; i < array.length; i++) {
+      var num = array[i]
+      for (let j = 0; j < values.length; j++) {
+        var val = values[j]
+        if (num !== val && !final.includes(num)) {
+          final.push(num)
+          break
+        }
+        else
+          break
+      }
+    }
+    return final
+  }
+</script>
+<script type="xxx">
+  function flattenDeep(array) {
+    var result = []
+    for (let i = 0; i < array.length; i++) {
+      if (Array.isArray(array[i])) {
+        result.concat(flattenDeep(array[i]))
+      }
+      else
+        result.concat(array[i])
+    }
+    return result
+  }
+</script>
+<script>
+  function flattenDepth(array, deep) {
+    if (deep == 0) return array
+    var result = []
+    for (let i = 0; i < array.length; i++) {
+      var element = array[i]
+      if (Array.isArray(element)) {
+        element = flattenDepth(element, deep - 1)
+        result = result.concat(element)
+      }
+      else
+        result.push(element)
+    }
+  }
+</script>

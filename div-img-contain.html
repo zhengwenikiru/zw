@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>position</title>
+  <!-- 用Bg-position实现小图，长图宽图的居中显示 -->
+  <style>
+    body {
+      background-color: rgb(225, 225, 225);
+    }
+
+    div {
+      width: 300px;
+      height: 300px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 200px;
+      border: 2px solid black;
+    }
+
+    /* 背景图是小图的居中 */
+    .first {
+      background-image: url(img/face.jpg);
+      background-repeat: no-repeat;
+      background-position: 50% 50%;
+    }
+
+    /* 长图居中 设置图片宽高与盒子相同，of属性值为contain*/
+    /* 图片比盒子大需要取图片中间部分时，of属性设为cover */
+    .second img {
+      width: 300px;
+      height: 300px;
+      object-fit: contain;
+    }
+
+    /* 放在盒子里的宽图居中 */
+    .third>img {
+      display: block;
+      position: absolute;
+      max-width: 100%;
+      max-height: 100%;
+      margin: auto;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="first">
+  </div>
+  <div class="second" style="position: relative;">
+    <img
+      src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/c583f2edc613f1be20fa415910b13ce3.jpg?thumb=1&w=468&h=1228&f=webp&q=90"
+      alt="">
+  </div>
+  <div class="third" style="position: relative;">
+    <img src="https://www.12306.cn/index/images/abanner05.jpg" alt="">
+  </div>
+</body>
+
+</html>

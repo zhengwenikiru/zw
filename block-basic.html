@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>三角形</title>
+  <style>
+    body {
+      margin: 20px;
+    }
+
+    header {
+      background-color: red;
+      margin-bottom: 20px;
+    }
+
+    header p {
+      width: 600px;
+      margin: auto;
+    }
+
+    section {
+      margin: auto;
+      width: 0;
+      border: 50px solid red;
+      border-color: transparent transparent orange transparent;
+    }
+
+    .a {
+      width: 600px;
+      /* height: 300px; */
+      border: 2px solid black;
+      margin: auto;
+      padding: 0 15px;
+      /* margin-left: auto;
+      margin-right: auto; */
+    }
+
+    .a :nth-child(1) {
+      height: 4em;
+      overflow: auto;
+    }
+
+    .a :nth-child(2) {
+      height: 50px;
+      background-color: rgb(232, 100, 233);
+    }
+
+    .a :nth-child(2):hover {
+      margin-left: -15px;
+      margin-right: -15px;
+    }
+
+    /* content-box为0，边框组成一个橘色正方形，边框接口处是三角状，content-box不为0时，边框为梯形 */
+  </style>
+</head>
+
+<body>
+  <header>
+    <p>head</p>
+  </header>
+  <div class="a">
+    <p> Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quasi obcaecati deleniti tempore ea totam optio ipsam
+      repudiandae corrupti animi laboriosam corporis odit officiis minus, modi, consequuntur facere nihil sed.Quas.
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo amet ipsum debitis accusantium ullam voluptatibus
+      veritatis consectetur. Laborum, excepturi accusantium. Quas nesciunt ea consequatur dolores est sint, sapiente
+      quaerat eum?
+    </p>
+    <div></div>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum nulla doloribus cupiditate accusamus possimus
+      delectus aliquid, libero ad voluptatem labore a quas odit iste provident saepe, itaque repudiandae, sapiente
+      temporibus!</p>
+  </div>
+  <section></section>
+</body>
+
+</html>

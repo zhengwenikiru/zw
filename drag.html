@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>dragGame</title>
+  <style>
+    div {
+      width: 100px;
+      height: 100px;
+      position: fixed;
+      user-select: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="drag" style=" background-color: red;left: 100px;top: 0;z-index: 1;"></div>
+  <div class="drag" style="  background-color: blue;left: 210px;top: 0;z-index: 2;"></div>
+  <div class="drag" style="background-color: green;left: 320px;top: 0;z-index: 3;"></div>
+  <script>
+    var maxZindex = 4
+    document.addEventListener('mousedown', function (e) {
+      if (!e.target.classList.contains('drag')) {
+        return
+      }//鼠标点的不是可拖拽的方块
+
+      var orgX = e.clientX
+      var orgY = e.clientY
+      //鼠标相对于窗口的位置
+      var elt = e.target
+      elt.style.zIndex = maxZindex++//点到的方块置顶
+      var eltorgX = parseFloat(elt.style.left)
+      var eltorgY = parseFloat(elt.style.top)
+      //元素相对于窗口的位置
+      window.addEventListener('mousemove', function move(event) {
+        if (event.which === 0 || event.buttons === 0) {
+          window.removeEventListener('mousemove', move)
+          return
+        }
+
+        var curX = event.clientX
+        var curY = event.clientY
+        //鼠标移动到的位置
+        var rX = curX - orgX
+        var rY = curY - orgY
+        //鼠标移动的距离
+
+        var left = eltorgX + rX
+        var top = eltorgY + rY
+        //移动到视口边缘，吸附效果
+        if (left < 30) {
+          left = 0
+        }
+        if (left > window.innerWidth - elt.offsetWidth - 30) {
+          left = window.innerWidth - elt.offsetWidth
+        }
+
+        if (top < 30) {
+          top = 0
+        }
+        if (top > window.innerHeight - elt.offsetHeight - 30) {
+          top = window.innerHeight - elt.offsetHeight - 30
+        }
+
+        elt.style.left = left + 'px'
+        elt.style.top = top + 'px'
+      })
+    })
+  </script>
+</body>
+
+</html>

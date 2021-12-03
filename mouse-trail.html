@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    div {
+      width: 20px;
+      height: 20px;
+      background-color: cornflowerblue;
+      position: fixed;
+      border-radius: 999px;
+    }
+  </style>
+</head>
+
+<body>
+  <div style="left: 0;top: 0;"></div>
+  <div style="left: 0;top: 0;"></div>
+  <div style="left: 0;top: 0;"></div>
+
+  <script>
+    var blocks = document.querySelectorAll('div')
+    var mx = -999
+    var my = -999
+    //浏览器内鼠标事件不触发是拿不到鼠标的坐标的额，只能默认为0,或者设置为负值不显示在页面内
+    window.addEventListener('mousemove', e => {
+      mx = e.clientX
+      my = e.clientY
+    })
+    requestAnimationFrame(function move(time) {
+      var angle = time * 0.01
+      for (var block of blocks) {
+        block.style.left = Math.cos(angle) * 50 + mx + 'px'
+        block.style.top = Math.sin(angle) * 50 + my + 'px'
+        angle += Math.PI * 2 / 3
+      }
+      requestAnimationFrame(move)
+    })
+  </script>
+</body>
+
+</html>

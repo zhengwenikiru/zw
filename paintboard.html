@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .dot {
+      width: 6px;
+      height: 6px;
+      position: absolute;
+      border-radius: 999px;
+      border-color: red;
+    }
+
+    svg {
+      border: 2px solid black;
+    }
+  </style>
+</head>
+
+<body>
+  <svg width="500px" height="500px" version="1.1" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"></svg>
+  <br>
+  图形：<button onclick="linetype = 'line'">线</button>
+  <button onclick="linetype = 'circle',circletype = 'empty'">空心圆</button>
+  <button onclick="circletype = 'real'">实心圆</button>
+  颜色：<input type="color" id="linecolor">
+  线条粗细：<input type="range" min="1" max="10" value="2" id="linewidth">
+  <span class="line-width-value">2</span>
+  <input type="button" id="clear" value="清空">
+  <button onclick="save()">保存</button>
+  <script>
+    var draw = false
+    var svg = document.querySelector("svg")
+    var linetype = 'line'
+    var lastpos = null
+    var circletype = 'empty'
+    //只有鼠标按下才绑定mousemove，鼠标松开后解绑
+    document.addEventListener("mousedown", function (e) {
+      //划线
+      if (linetype == 'line') {
+        var pos = mousePos(svg)
+        var polyline = document.createElementNS('http://www.w3.org/2000/svg', 'polyline')//折线图
+        polyline.setAttribute('fill', 'none')//取消填充
+        polyline.setAttribute("stroke", linecolor.value)
+        polyline.setAttribute('stroke-width', linewidth.value)
+        polyline.setAttribute('stroke-linecap', 'round')//两条线起点终点相交处状态
+        polyline.setAttribute('stroke-linejoin', 'round')//拐角处状态
+
+        svg.append(polyline)
+        var points = `${pos.x} ${pos.y} `
+        polyline.setAttribute("points", points)
+
+        function drawDot(e) {
+          var pos = mousePos(svg)//先获取鼠标相对于svg(画板)的位置
+
+          //普通的creatElement创建的是html结点，而svg不是html结点
+          points += `${pos.x} ${pos.y} `
+          polyline.setAttribute('points', points)
+
+
+        }
+        document.addEventListener("mousemove", drawDot)
+        document.addEventListener("mouseup", function once() {
+          lastpos = null
+          document.removeEventListener("mouseup", once)
+          document.removeEventListener("mousemove", drawDot)
+        })
+      }
+      //画圆
+      if (linetype == 'circle') {
+        var ellipse = document.createElementNS("http://www.w3.org/2000/svg", "ellipse")
+        ellipse.setAttribute("stroke", linecolor.value)
+        ellipse.setAttribute("stroke-width", linewidth.value)//粗细
+        if (circletype == 'empty') {//空心或实心圆
+          ellipse.setAttribute("fill", 'none')
+        } else {
+          ellipse.setAttribute("fill", linecolor.value)
+        }
+        svg.append(ellipse)
+        var startPos = mousePos(svg)
+        //鼠标移动的时候运行draw函数
+        function drawEllipse() {
+          var curPos = mousePos(svg)
+          var cx = (startPos.x + curPos.x) / 2
+          var cy = (startPos.y + curPos.y) / 2
+          ellipse.setAttribute('cx', cx)
+          ellipse.setAttribute('cy', cy)
+          var rx = Math.abs(startPos.x - curPos.x) / 2
+          var ry = Math.abs(startPos.y - curPos.y) / 2
+          ellipse.setAttribute('rx', rx)
+          ellipse.setAttribute('ry', ry)
+        }
+        document.addEventListener('mousemove', drawEllipse)
+        document.addEventListener('mouseup', function once() {
+          document.removeEventListener('mouseup', once)
+          document.removeEventListener('mousemove', drawEllipse)
+        })
+      }
+    })
+
+    //线条粗细
+    //给拉伸条增加change事件，则在松开按键后才会显示数值。所以添加的是input事件
+    var linewidth = document.querySelector("#linewidth")
+    var widthspan = document.querySelector(".line-width-value")
+    linewidth.addEventListener("input", e => {
+      widthspan.textContent = linewidth.value
+    })
+
+    //获取鼠标在svg中的坐标，Elemnt.getBoundingClientRect()返回一个对象，包括元素的大小及其相对于视口的位置
+    function mousePos(node) {
+      var box = node.getBoundingClientRect()
+      return {//clientX,clientY是鼠标相对于视口左上角的位置，用鼠标相对于视口的位置减去元素(此处为画板)相对于视口的位置
+        x: window.event.clientX - box.x,
+        y: window.event.clientY - box.y
+      }
+    }
+
+    function save() {
+      var svgSource = svg.outerHTML
+      var blob = new Blob(['<?xml version="1.0" encoding="utf-8"?>', svgSource], { type: 'image/xml+svg' })
+      var url = URL.createObjectURL(blob)
+      var link = document.createElement('a')
+      link.href = url
+      link.download = 'Untitled.svg'
+      link.click()
+    }
+
+
+
+
+
+
+    //图片下载需要点击a标签才能下载，所以需要创建url，并将url放到a标签上
+    //然后调用link的click方法，他会模拟a标签被点击的事件
+
+
+
+
+    //ctrl+z 撤销,按下ctrl+z 移除svg的最后一个子元素，即最后一笔存入的g
+    document.addEventListener("keydown", function (e) {
+      if (e.ctrlKey && e.key == "z") {
+        if (svg.lastElementChild) {
+          svg.removeChild(svg.lastElementChild)
+        }
+      }
+    })
+
+
+    //清空
+    //从前往后删除子节点会发现无论在FireFox还是在IE下，均不能完全的删除所有的子节点
+    //（FireFox中把空白区域也当成节点，所以删除结点的结果会不一样的）
+    //这是因为当你把索引为0的子节点删除后那么很自然的原来索引为1节点此时它的索引变成0了，   ——>即获取的children是动态的
+    //而这时变量i已经变成1了，程序继续走时就会删除原先索引为２的现在为1的节点，
+    //这样程序运行的结果就是只删除了一半的子节点，用for in遍历结果也是一样的。想正常的删除全部节点的话，我们应该从后面往前删除
+    var clear = document.querySelector("#clear")
+    clear.addEventListener("click", function (e) {
+      var children = svg.childNodes
+      for (var i = children.length - 1; i >= 0; i--) {
+        svg.removeChild(children[i])
+      }
+    })
+
+  </script>
+</body>
+
+</html>

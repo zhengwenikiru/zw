@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini-regex</title>
+  <style>
+    div {
+      width: 400px;
+      margin: auto;
+    }
+
+    input[type="text"] textarea {
+      width: 400px;
+    }
+
+    label {
+      font-family: consolas;
+      cursor: pointer;
+    }
+
+    label input {
+      cursor: pointer;
+    }
+
+    em {
+      background-color: skyblue;
+      font-style: normal;
+    }
+
+    em:nth-of-type(even) {
+      background-color: #d5ebff;
+    }
+
+    /* 将textarea 和 结果框 重叠，达成就地显示结果的效果 */
+    section {
+      width: 300px;
+      position: relative;
+    }
+
+    /* 对齐两个框的文本 */
+    section #res,
+    section textarea {
+      line-height: 1.4;
+      padding: 5px;
+      display: block;
+      white-space: pre-wrap;
+      border: 2px solid;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+      box-sizing: border-box;
+      font-family: consolas;
+      font-size: 16px;
+      overflow: scroll;
+    }
+
+    /* 设置一样的对齐方式，字号 */
+    section textarea {
+      position: relative;
+      z-index: 10;
+      background-color: transparent;
+    }
+
+    section pre {
+      color: transparent;
+      position: absolute;
+      top: 0;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div>
+    请输入正则表达式并选择修饰符:
+    <label><input type="checkbox" id="ignore" oninput="run()"> i </label>
+    <label><input type="checkbox" id="global" oninput="run()"> g </label>
+    <label><input type="checkbox" id="multiline" oninput="run()"> m </label>
+    <!-- onkeyup/onkeydown/oninput使得浏览器中鼠键盘每松开/按下/输入一次，就执行一次后面的代码 -->
+
+    <br>
+    <input type="text" id="reg" onkeyup="run()"> <br>
+    <p id="regError"></p>
+    请输入匹配内容: <br>
+    <section>
+      <pre id="res">
+      </pre>
+      <textarea name="" id="suitstr" spellcheck="false" cols="30" rows="10" onkeyup="run()" onscroll="setScroll()">
+        <!-- 在标签内添加了多个可触发事件 -->
+        <!-- 每个调用函数，浏览器会先在该元素内部找同名函数，然后按顺序从document->全局 
+        textarea里自带一个scroll函数，并且该函数拿不到滑动高度，所以Setscroll不能命名为scroll-->
+      </textarea>
+      <!-- 给文本框id后，id.value就能访问到该输入框内的内容，也可以给其赋值 -->
+      <!-- 匹配结果框 -->
+      <!-- 使用res.innerHTML可以给id名为res的目标增加代码 -->
+
+    </section>
+  </div>
+
+  <script>
+    function setScroll() {
+      var scroll = strInput.scrollTop
+      res.value.top = -scroll + 'px'
+    }//获取输入框的滚轮高度，赋给结果框，达到同步滚动效果
+    function run() {
+      var regSource = reg.value//获取输入文本框reg的内容 |  文本框输入的是什么，拿到的就是什么，不需要进行转义 。 但是浏览器为了显示，会显示转义后的样子，直接使用即可
+      var flags = getFlags()//修饰词
+      try {
+        var re = new RegExp(regSource, flags)//生成文本框内容的正则表达式
+        regError.innerHTML = ''
+      } catch (error) {//出错，显示错误
+        regError.innerHTML = error.message
+        res.innerHTML = ''//在创建正则表达式时出错，只有在regSouce语法可能出错，此时将结果框清空
+        return
+      }
+      var str = suitstr.value//匹配框的内容
+      var match
+      if (re.global) {
+        var resHTML = ''
+        var lastIndex = re.lastIndex
+        while (match = re.exec(str)) {
+          resHTML += str.slice(lastIndex, match.index) //每次匹配都是从正则表达式上一次的Lastindex开始匹配。   这一句是拿到没有匹配到的字符串用于拼接
+          resHTML += '<em>' + match[0] + '</em>'//拼接，并把匹配到的字符串放入em标签里
+          lastIndex = re.lastIndex
+          if (match[0] == '') {
+            re.lastIndex++//匹配到空字符串，++
+          }
+        }
+        resHTML += str.slice(lastIndex)//还需要在将最后一次匹配结束后还剩余的，未被匹配到的再拼接一次
+        res.innerHTML = resHTML
+      } else {//没有全局匹配修饰符，则只执行一次
+        var resHTML = ''
+        match = re.exec(str)
+        resHTML += str.slice(0, match.index) //从头开始剪切
+        resHTML += '<em>' + match[0] + '</em>'//match返回的是数组，只要第一项->匹配到的字符串
+        resHTML += str.slice(match.index + match[0].length)//从匹配开始位置加上匹配成功的字符串长度，得到后续字符串的起始位置
+        res.innerHTML = resHTML
+      }
+    }
+    run()
+
+    //拿到修饰词
+    //checkbox.value 能显示是否被选中
+    function getFlags() {
+      var flags = ''
+      if (ignore.checked) {
+        flags += 'i'
+      }//
+      if (global.checked) {
+        flags += 'g'
+      }
+      if (multiline.checked) {
+        flags += 'm'
+      }
+      return flags
+    }
+  </script>
+</body>
+
+</html>

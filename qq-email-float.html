@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>float-email</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0 2px;
+      height: 100%;
+    }
+
+    header {
+      width: 100%;
+      height: 120px;
+    }
+
+    header img {
+      width: 300px;
+    }
+
+    .left {
+      float: left;
+      width: 150px;
+      height: 100%;
+      border: 5px solid rgb(119, 165, 228);
+      border-radius: 20px;
+      overflow: auto;
+    }
+
+    .right {
+      position: fixed;
+      top: 120px;
+      right: 0;
+      width: 200px;
+      height: 180px;
+      border: 2px solid rgb(119, 165, 228);
+      border-radius: 20px;
+    }
+
+    .main {
+      float: left;
+      width: calc(100% - 370px);
+      text-align: left;
+      text-indent: 1em;
+      padding: 5px;
+      overflow: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <img src="img/qq-email.png" alt="">
+  </header>
+
+
+  <span class="left">
+    <ul style="border-bottom: 1px solid rgb(119, 165, 227); list-style: none;">
+      <li>写信</li>
+      <li>收信</li>
+      <li>通讯录</li>
+    </ul>
+    <ul style="border-bottom: 1px solid rgb(119, 165, 227); list-style: none;">
+      <li>收件箱</li>
+      <li>星标邮件</li>
+      <li>群邮件</li>
+      <li>草稿箱</li>
+      <li>已发送</li>
+      <li>已删除</li>
+      <li>垃圾箱</li>
+      <li>其他邮件</li>
+    </ul>
+    <ul style="list-style: none;">
+      <li>日历</li>
+      <li>简历</li>
+      <li>在线文档</li>
+      <li>每日悦读</li>
+      <li>附件收藏</li>
+      <li>文件中转站</li>
+    </ul>
+  </span>
+  <span class="main">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sequi hic sapiente sed? Quos fugiat
+    maiores quasi
+    eligendi laudantium tempore eius, molestiae possimus quisquam dolor vel! Cum excepturi laborum ipsa
+    aperiam?</span>
+  <span class="right"></span>
+</body>
+
+</html>

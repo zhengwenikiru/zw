@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>smile</title>
+  <style>
+    section {
+      width: 400px;
+      height: 400px;
+      position: relative;
+      /* border: 1px solid black; */
+      margin: 300px auto;
+      animation: move 6s linear infinite;
+    }
+
+    div img {
+      width: 80px;
+      height: 80px;
+      position: absolute;
+      left: -20px;
+      top: -20px;
+      animation: move 6s linear infinite reverse;
+    }
+
+    @keyframes move {
+      0% {
+        transform: rotateZ(0deg);
+      }
+
+      100% {
+        transform: rotateZ(360deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <section>
+    <div><img src="img/smile.png" alt=""></div>
+  </section>
+</body>
+
+</html>

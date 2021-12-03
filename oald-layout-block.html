@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dictionary</title>
+  <style>
+    /* 五个块一次排列 用margin移动位置强行排在一行实现行内块效果 */
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* 左边定宽，高度等于视口高viewport height */
+    .left {
+      width: 198px;
+      height: 100vh;
+      border-right: 2px solid skyblue;
+    }
+
+    .top {
+      height: 98px;
+      width: calc(100vw - 600px);
+      margin-left: 200px;
+      margin-top: calc(-100vh);
+      border-bottom: 2px solid skyblue;
+    }
+
+    .main {
+      background-color: rgb(194, 239, 237);
+      height: calc(100vh - 100px);
+      margin-left: 200px;
+      width: calc(100vw - 600px);
+      overflow: auto;
+    }
+
+    .right1 {
+      width: 198px;
+      border-left: 2px solid skyblue;
+      margin-left: calc(100vw - 400px);
+      margin-top: calc(-100vh);
+      height: calc(100vh);
+    }
+
+    .right2 {
+      border-left: 2px solid skyblue;
+      width: 198px;
+      height: calc(100vh);
+      margin-left: calc(100vw - 200px);
+      margin-top: calc(-100vh);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="left">左边的块</div>
+  <div class="top">最上面的块</div>
+  <div class="main">可伸缩的块 Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel eius perferendis repellendus
+    possimus rerum aliquid illum quisquam quod maxime nisi non pariatur fugiat ad quia aperiam iste autem, eum
+    accusamus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel aspernatur architecto natus impedit expedita
+    illo exercitationem quis ex ipsam veritatis, quam nemo fugiat eum, distinctio atque aliquam excepturi vitae error.
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. A hic ipsam ullam corporis saepe tempore quaerat minus
+    architecto optio odio assumenda officia dolores recusandae animi explicabo, quis, atque iste nemo.
+    Eos, pariatur quo nemo aut recusandae iste vitae tempore perferendis dolorum. Amet cupiditate illum, quam eaque
+    distinctio ducimus minus ex? Nemo laboriosam aut libero pariatur! In sapiente dolore cumque tempore?
+    Numquam excepturi maiores minus architecto dolore beatae, consequuntur recusandae, nostrum a labore assumenda
+    voluptas natus vitae facere aliquid. Expedita animi ipsa doloribus, delectus laudantium voluptas ab laborum
+    repellendus modi officiis.
+    Nemo itaque officiis veritatis eos voluptatibus aut totam unde earum sequi nobis deserunt natus fuga ex id ipsum
+    culpa cumque veniam quo dolores, praesentium necessitatibus excepturi magni eligendi! Maiores, consequuntur!
+    Dicta, quam deleniti? Voluptate nisi aliquam repellat obcaecati voluptatum dignissimos. Rerum inventore soluta
+    doloremque quos quae, omnis culpa quod nemo dolore dolor facere cum! Voluptas itaque totam dolor necessitatibus
+    ipsam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus, nemo esse possimus vero incidunt ex
+    culpa harum necessitatibus quam cumque eum nesciunt tempore temporibus! Illum natus necessitatibus maxime earum
+    animi?
+    Vero eum delectus qui ab repellat illum dolor iste quibusdam, soluta, unde dolorum magni laudantium cupiditate
+    sapiente, eos officiis mollitia nemo. Qui, veritatis dolorum exercitationem modi suscipit consequatur repellat
+    dolor?
+    Nesciunt id architecto eaque exercitationem esse hic delectus officia, aspernatur impedit harum quidem odio ipsam.
+    Nostrum rerum, totam non omnis velit expedita, reprehenderit incidunt earum nemo magni odit eum illo.
+    Veritatis accusantium pariatur fugiat tenetur at perspiciatis nulla dicta quis distinctio unde voluptatum quam
+    voluptatem nihil blanditiis eius molestias modi saepe minus alias, possimus accusamus eum quod. Error, quisquam in.
+    Tempora magnam minima nemo! Sunt nulla expedita quasi illo. Fugit tempora quasi eligendi voluptas, mollitia
+    voluptatem sed earum ad fuga. Consequuntur iure quos, molestias magni nam voluptas rem labore alias.23143 Lorem,
+    ipsum dolor sit amet consectetur adipisicing elit. Temporibus vero nobis animi magni ea voluptatibus commodi, facere
+    sit expedita neque aut deleniti optio. Blanditiis natus ipsa architecto velit, ex dolorum!
+    Repellendus quas ad aliquid odit ipsa voluptas, aspernatur pariatur, maxime molestiae laboriosam sunt. Est veniam
+    magnam maiores deleniti excepturi, amet nemo. Ratione distinctio repudiandae nulla voluptatibus aspernatur beatae
+    modi dolorum?
+    Minus consectetur voluptas dolorem unde labore et. Sint blanditiis perspiciatis esse tenetur velit, libero
+    recusandae non deleniti vel reiciendis in veritatis laborum eos iure delectus praesentium omnis voluptates!
+    Perferendis, ipsa?
+  </div>
+  <div class="right1">右边的块</div>
+  <div class="right2">最右边的块</div>
+</body>
+
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>画图</title>
+  <style>
+    canvas {
+      border: 2px solid #f0f;
+      display: block;
+      margin: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas width="1000" height="1000"></canvas>
+</body>
+<script>
+  var canvas = document.querySelector('canvas')
+  canvas.style.imageRendering = 'pixelated' //放大时的插帧方式：不插帧，直接放大像素
+  var ctx = canvas.getContext('2d')
+
+  function dot(x, y, color = 'black') {
+    x = Math.round(x)
+    y = Math.round(y)
+    ctx.fillStyle = color
+    ctx.fillRect(x, y, 1, 1)
+  }
+  /**
+   * YOUR TASK
+      * 在 坐标 (42, 42) 画出一个点
+      * 画一条实线
+      * 画一条一个实点一个空点的虚线
+      * 画一条两个实点两个空点的虚线
+      * 画一条三个实点两个空点的虚线
+      * 画一条45度的斜线
+      * 画一条30度的斜线（与x轴或y轴的夹角呈30度）
+      * 画一条跨越画布左上角和右下角的对角线
+      * 画一个空心矩形
+      * 画一个实心矩形
+      * 画两个个空心的圆，居中：
+        * 一个半径为50像素
+        * 一个半径为200像素
+      * 画一个实心的圆，半径至少为100像素
+      * 画一个【大小合适】的sin(x)的图像
+
+      * 画出rgb色彩空间的某一面（尺寸要大于100x100）
+        如果做出上一题后，尝试将其每个点的坐标乘以一个矩阵（如(2,0,0,2)或(1,0.27得到新的位置，即绘制出被线性变幻后的色彩空间某一面
+        可以考虑如下几种矩阵：
+           2 0
+           0 2
+           ------
+           1  0.27
+           0  1
+           ------
+           0.5    0.87
+           -0.87  0.5
+
+   */
+</script>
+<script>
+  // 不可更改上面的代码
+  // 你的代码写在这里
+  // YOUR CODE GOES BELOW
+  // 1.画一个点
+  dot(42, 42, 'red')
+  // 2.
+  for (let i = 0; i < 100; i++) {
+    dot(i, 10)
+  }
+  // 3
+  for (let i = 0; i < 100; i++) {
+    if (i % 2 == 0) {
+      dot(i, 20)
+    }
+  }
+  // 4
+  for (let i = 0; i < 100; i++) {
+    if (i % 4 == 0 || i % 4 == 3) {
+      dot(i, 30)
+    }
+  }
+  // 5
+  for (let i = 0; i < 100; i++) {
+    if (i % 5 == 1 || i % 5 == 2 || i % 5 == 3) {
+      dot(i, 40)
+    }
+  }
+  // 6
+  var j = 40
+  for (let i = 40; i < 80; i++) {
+    if (i % 2 == 0) {
+      dot(i, j, 'blue')
+      j = j - 2
+    }
+  }
+  // 7
+  for (let i = 0; i < 80; i++) {
+    if (i % 2 == 0) {
+      dot(i, i * Math.sqrt(3))
+    }
+  }
+  // 8
+  for (let i = 0; i < 1000; i++) {
+    if (i % 2 == 0) {
+      dot(i, i)
+    }
+  }
+  // 9
+  for (let i = 1; i < 41; i++) {
+    // 第i行
+    if (i == 1 || i == 40) {
+      for (let j = 0; j < 101; j++)
+        dot(120 + j, i, 'blue')
+    }
+    else {
+      dot(120, i, 'blue')
+      dot(220, i, 'blue')
+    }
+  }
+  // 10
+  for (let i = 1; i < 41; i++) {
+    // 第i行  
+    for (let j = 0; j < 101; j++)
+      dot(230 + j, i, 'blue')
+  }
+  // 11
+  for (let i = 0; i < 1000; i++) {
+    for (let j = 0; j < 1000; j++) {
+      if (((i - 500) ** 2 + (j - 500) ** 2) >= 2400 && ((i - 500) ** 2 + (j - 500) ** 2) <= 2550) {
+        dot(i, j, 'pink')
+      }
+    }
+    for (let j = 0; j < 1000; j++) {
+      if (((i - 500) ** 2 + (j - 500) ** 2) >= 39600 && ((i - 500) ** 2 + (j - 500) ** 2) <= 40000) {
+        dot(i, j, 'purple')
+      }
+    }
+  }
+  // 12
+  for (let i = 0; i < 1000; i++) {
+    for (let j = 0; j < 1000; j++) {
+      if (((i - 800) ** 2 + (j - 400) ** 2) <= 10000) {
+        dot(i, j, 'pink')
+      }
+    }
+  }
+  // 13  sin 图像
+  for (let j = 400; j < 1000; j++) {
+    dot(j, 400)
+
+  }
+  for (let i = 400; i < 800; i++) {
+    dot(i, 400 - 150 * Math.sin((i - 400) * 3.14 / 200))
+  }
+  //RGB一页
+  for (let i = 0; i < 256; i++) {
+    for (let j = 0; j < 256; j++) {
+      dot(i, j + 600, 'RGB(' + i + ',' + j + ', 255)')
+    }
+  }
+  // RGB一页乘以矩阵[0.5 0.87 ,-0.87 0.5]
+  var x, y
+  for (let i = 0; i < 256; i++) {
+    for (let j = 0; j < 256; j++) {
+      x = 0.5 * i - 0.87 * j
+      y = 0.5 * i + 0.87 * j
+      dot(x + 700, y + 600, 'RGB(' + i + ',' + j + ', 255)')
+    }
+  }
+</script>
+
+</html>

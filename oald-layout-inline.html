@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dictionary-inline-block</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+
+    .left {
+
+      display: inline-block;
+      width: 200px;
+      height: 100vh;
+      background-color: red;
+      vertical-align: top;
+    }
+
+    .top {
+      display: inline-block;
+      width: calc(100vw - 600px);
+      height: 100px;
+      background-color: green;
+      vertical-align: top;
+    }
+
+    .main {
+      display: inline-block;
+      width: calc(100vw - 600px);
+      margin-left: calc(600px - 100vw);
+      height: calc(100vh - 100px);
+      background-color: pink;
+      vertical-align: bottom;
+    }
+
+    .right1 {
+      display: inline-block;
+      width: 200px;
+      height: 100vh;
+      background-color: grey;
+      vertical-align: top;
+    }
+
+    .right2 {
+      display: inline-block;
+      width: 200px;
+      height: 100vh;
+      background-color: skyblue;
+      vertical-align: top;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="all" style="word-spacing: -7px;">
+    <span class="left"></span><span class="top"></span><span class="main"></span><span class="right1"></span>
+    <span class="right2"></span>
+  </div>
+</body>
+
+</html>

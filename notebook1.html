@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    section {
+      width: 75%;
+      height: 100%;
+      position: fixed;
+      right: 5px;
+      display: inline-block;
+      border-radius: 9px;
+      font-size: 20px;
+      border: 2px solid;
+    }
+
+    div {
+      width: 23%;
+      height: 100%;
+      display: inline-block;
+      position: relative;
+      background-color: gainsboro;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    选择便签：<select id="list">
+      <option value="shoppinglist"></option>
+    </select>
+    <button onclick="addNote()" style="position: absolute;right: 0;">新建便签</button>
+    <br>
+    <br>
+    选择字号：<select id="font-size">
+      <option value="20">20</option>
+      <option value="24">24</option>
+      <option value="28">28</option>
+      <option value="32">32</option>
+      <option value="36">36</option>
+    </select>
+    <button id="weight">B</button>
+    便签颜色<input type="color" id="notecolor">
+    <br>
+    <br>
+    <button id="clear-list" onclick="emptyList()" style="background-color: red;color: #ffff;">清空所有便签</button>
+    <button id="clear-content" onclick="emptyContent()" style="background-color: skyblue;color:#ffff;">清空当前便签</button>
+    <br>
+    <p>ps:日志内容自动保存。点击B加粗字体，再次点击取消加粗</p>
+  </div>
+  <section id="noteContent">Have a good day!</section>
+  <!-- 为什么设置的默认语句不显示？？？ -->
+  <script>
+    var list = document.querySelector('#list')
+    function addTolist(title) {
+      var option = document.createElement('option')
+      option.textContent = title
+      list.appendChild(option)
+    }//目录添加新日志
+    var notes = JSON.parse(localStorage.getItem('notes')) || { 'shoppinglist': '' }
+    //读取notes，默认值为只含shoppinglist的对象
+    //notes用于存储日志内容，属性名为日志名，属性值为日志内容
+    for (var title in notes) {
+      if (notes.hasOwnProperty(title)) {
+        addTolist(title)
+      }
+    }
+    function saveToStorage() {
+      localStorage.setItem('notes', JSON.stringify(notes))
+    }
+    var content = document.querySelector('#noteContent')
+    var size = document.querySelector('#font-size')
+    var bigger = document.querySelector('#weight')
+    var lettersize
+    var big = false
+    content.value = notes[list.value]
+    //textarea内显示当前List里选中的日志标题对应的内容
+    list.addEventListener('change', function () {
+      content.value = notes[list.value]//textarea内容随list标题变换
+    })
+    content.addEventListener('change', function () {
+      notes[list.value] = content.value
+      saveToStorage()
+    })
+    size.addEventListener('change', function () {
+      lettersize = size.value
+    })
+    content.addEventListener('input', function () {
+      content.style.fontSize = lettersize + 'px'
+    })//字体大小。
+
+    //如何做到字体样式应用到非全局????
+
+    //拖拽
+
+
+
+
+
+
+
+    bigger.addEventListener('click', function () {
+      if (big) {
+        content.style.fontWeight = 400
+        big = false
+      } else {
+        content.style.fontWeight = 700
+        big = true
+      }
+    })
+    //新建便签
+    function addNote() {
+      var title = prompt('请输入需要添加的新便签名称', '')
+      if (!title) return//新日志名称为空
+      if (!notes.hasOwnProperty(title)) {
+        notes[title] = ''
+        addTolist(title)
+        var newNote = document.createElement('textarea')
+        newNote.classList.add('drag')
+        newNote.style.backgroundColor = '' + notecolor.value
+        newNote.style.width = 400 + 'px'
+        newNote.style.height = 400 + 'px'
+        newNote.style.opacity = 0.3
+        content.appendChild(newNote)
+        saveToStorage()
+      }
+      list.value = title
+      content.value = notes[title]
+    }
+    //清空日志列表
+    function emptyList() {
+      var yn = confirm('确定要清除目录中所有日志吗？')
+      if (!yn) {
+        return
+      } else {
+        var children = list.childNodes
+        for (let i = children.length - 1; i >= 0; i--) {
+          list.removeChild(children[i])
+        }
+      }
+      localStorage.clear()
+    }
+    //清空本页日志
+    function emptyContent() {
+      var emfull = confirm('即将清空本页日志！')
+      if (!emfull) {
+        return
+      } else {
+        content.value = ''
+      }
+    }
+  </script>
+
+</body>
+
+</html>

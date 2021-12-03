@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    div {
+      width: 30px;
+      height: 30px;
+      background-color: red;
+      position: absolute;
+    }
+
+    section {
+      width: 30px;
+      height: 30px;
+      position: absolute;
+      background-color: blue;
+    }
+  </style>
+</head>
+<div style="top: 50px;left: 50px;"></div>
+<section style="top: 100px;left: 50px;"></section>
+
+<body>
+  <script>
+    var div = document.querySelector("div")
+    // document.addEventListener("keydown", function (e) {
+    //   if (e.key == "ArrowRight") {
+    //     div.style.left = parseInt(div.style.left) + 1 + "px"
+    //     //left的值为数字px的形式，Number只能转换纯数字和空格的组合，以数字开头后面跟其他字符的需要用parseInt转换
+    //   }
+    //   if (e.key == "ArrowLeft") {
+    //     div.style.left = parsrInt(div.style.left) - 1 + "px"
+    //   }
+    // })
+    //以上是用按键触发的方式移动方块，但是当左右键都被按下，并释放其中一个时，方块不会往一个方向持续移动
+    //即键盘上没有事件触发时，仍需要方块进行移动，此时只能用到requestAnimationFrame
+    var vx = 0//记录div水平方向的速度
+    var vy = 0//记录div垂直方向的速度
+    var leftPress = false//记录左键有没有被按下
+    var rightPress = false//记录右键是否被按下
+    var upPress = false
+    var downPress = false
+    document.addEventListener("keydown", function (e) {
+      if (e.key == "ArrowRight") {
+        vx = 1
+        rightPress = true
+      }
+      if (e.key == "ArrowLeft") {
+        vx = -1
+        leftPress = true
+      }
+      if (e.key == "ArrowUp") {
+        vy = -1
+        upPress = true
+      }
+      if (e.key == "ArrowDown") {
+        vy = 1
+        downPress = true
+      }
+    })
+
+    document.addEventListener("keyup", function (e) {
+      if (e.key == "ArrowRight") {//右键松开但左键还按着
+        rightPress = false
+        if (leftPress) {
+          vx = -1
+        } else {
+          vx = 0
+        }
+      }
+      if (e.key == "ArrowLeft") {//左键松开了但是右键还按着
+        leftPress = false
+        if (rightPress) {
+          vx = 1
+        } else {
+          vx = 0
+        }
+      }
+      if (e.key == "ArrowUp") {
+        upPress = false
+        if (downPress) {
+          vy = 1
+        } else {
+          vy = 0
+        }
+      }
+      if (e.key == "ArrowDown") {
+        downPress = false
+        if (upPress) {
+          vy = -1
+        } else {
+          vy = 0
+        }
+      }
+    })
+
+    //让元素根据vx的值发生变化
+    var lastTime = 0
+    requestAnimationFrame(function move(time) {
+      var timeDiff = time - lastTime
+      lastTime = time
+      div.style.left = parseFloat(div.style.left) + vx * timeDiff * 0.05 + "px"
+      div.style.top = parseFloat(div.style.top) + vy * timeDiff * 0.05 + "px"
+
+      requestAnimationFrame(move)
+    })
+//在requestAnimationFrame函数内time会自动获取浏览器内的时间
+  </script>
+
+  <script>
+    var sec = document.querySelector("section")
+    var cx = 0//记录sec水平方向的速度
+    var cy = 0//记录sec垂直方向的速度
+    var wPress = false//上 87 119
+    var sPress = false//下 83 115
+    var aPress = false//← 65 97
+    var dPress = false//→ 68 100
+    document.addEventListener("keydown", function (e) {
+      if (e.keyCode == 87 || e.keyCode == 119) {
+        cy = -1
+        wPress = true
+      }
+      if (e.keyCode == 83 || e.keyCode == 115) {
+        cy = 1
+        sPress = true
+      }
+      if (e.keyCode == 65 || e.keyCode == 97) {
+        cx = -1
+        aPress = true
+      }
+      if (e.keyCode == 68 || e.keyCode == 100) {
+        cx = 1
+        dPress = true
+      }
+    })
+    document.addEventListener("keyup", function (e) {
+      if (e.keyCode == 87 || e.keyCode == 119) {
+        wPress = false
+        if (sPress) {
+          cy = 1
+        } else {
+          cy = 0
+        }
+      }
+      if (e.keyCode == 83 || e.keyCode == 115) {
+        sPress = false
+        if (wPress) {
+          cy = -1
+        } else {
+          cy = 0
+        }
+      }
+      if (e.keyCode == 65 || e.keyCode == 97) {
+        aPress = false
+        if (dPress) {
+          cx = 1
+        } else {
+          cx = 0
+        }
+      }
+      if (e.keyCode == 68 || e.keyCode == 100) {
+        dPress = false
+        if (aPress) {
+          cx = -1
+        } else {
+          cx = 0
+        }
+      }
+    })
+
+    var lastTime2 = 0
+    requestAnimationFrame(function move2(time) {
+      var timeDiff2 = time - lastTime2
+      lastTime2 = time
+      sec.style.left = parseFloat(sec.style.left) + cx * timeDiff2 * 0.05 + "px"
+      sec.style.top = parseFloat(sec.style.top) + cy * timeDiff2 * 0.05 + "px"
+
+      requestAnimationFrame(move2)
+    })
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      margin: 0;
+    }
+
+    /* 第一层菜单排在第一行，行内块 */
+    .menu>li {
+      display: inline-block;
+    }
+
+    /* 第二层菜单相对于第一层菜单摆在它们下面，ul就是块元素 */
+    .b {
+      display: none;
+      position: absolute;
+      left: 0;
+      top: 100%;
+    }
+
+    /* 第三层菜单定位在父级-第二层菜单的右上角 */
+    .c {
+      display: none;
+      position: absolute;
+      left: 100%;
+      top: 0;
+    }
+
+    li {
+      white-space: nowrap;
+      position: relative;
+      background-color: skyblue;
+      text-align: center;
+      width: 100px;
+      height: 30px;
+      line-height: 30px;
+      border: 2px solid silver;
+      border-radius: 10px;
+    }
+
+    li:hover {
+      background-color: rgb(9, 251, 255);
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    /* 鼠标经过li时，展开其下一层菜单 */
+    li:hover>ul {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 第二层菜单对齐第一层的左下角，第三层菜单对齐第二层的右上角 -->
+  <!-- 所以第一层菜单全为inline-block，第二层在一层下方，则为block -->
+  <ul class="menu">
+    <li> 面食
+      <ul class="b">
+        <li>XX面</li>
+        <li>XX面
+          <ul class="c">
+            <li>加醋</li>
+            <li>加香菜</li>
+            <li>加辣</li>
+          </ul>
+        </li>
+        <li>XX面</li>
+        <li>XX面</li>
+      </ul>
+    </li>
+    <li>饮品
+      <ul class="b">
+        <li>原味奶茶</li>
+        <li>芋泥波波奶茶</li>
+        <li>手打椰
+          <ul class="c">
+            <li>3分糖</li>
+            <li>7分糖</li>
+            <li>全糖</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>甜点
+      <ul class="b">
+        <li>黑森林</li>
+        <li>抹茶树
+          <ul class="c">
+            <li>小份</li>
+            <li>中份</li>
+            <li>大份</li>
+          </ul>
+        </li>
+        <li>草莓塔</li>
+      </ul>
+    </li>
+  </ul>
+</body>
+
+</html>

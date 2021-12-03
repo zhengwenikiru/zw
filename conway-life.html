@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="world"></div>
+  <button onclick="next()">Next</button>
+  <button onclick="Auto()">AutoPlay</button>
+  density:<select id="density">
+    <option value="0.3">loose</option>
+    <option value="0.5">middle</option>
+    <option value="0.8">dense</option>
+  </select>
+
+
+
+
+  <script>
+    class Conway {
+      constructor(width, height) {
+        this.width = width
+        this.height = height
+        this.world = new Array(width * height).fill(0)
+      }
+
+      //按比例填充
+      randomFill(rate) {
+        for (var i = 0; i < this.world.length; i++) {
+          this.world[i] = Math.random() < rate ? 1 : 0
+        }
+      }
+      //获取某行某列的值
+      get(row, col) {
+        if (row > this.height || col > this.width) {
+          return 0
+        }
+        if (row < 0 || col < 0) {
+          return 0
+        }
+        return this.world[row * this.width + col]
+      }
+      //给某行某列赋值
+      set(row, col, val) {
+        if (row > this.height || col > this.width) {
+          return 0
+        }
+        if (row < 0 || col < 0) {
+          return 0
+        }
+        this.world[row * this.width + col] = val
+      }
+      //获取某行某列的alive邻居数(0为死亡，1为活着)
+      neibors(row, col) {
+        var count = 0
+        for (var r = row - 1; r <= row + 1; r++) {
+          for (var c = col - 1; c <= col + 1; c++) {
+            count += this.get(r, c)
+          }
+        }
+        return count - this.get(row, col)
+      }
+
+      next() {
+        var newWorld = new Array(this.width * this.height).fill(0)
+        for (var c = 0; c < this.width; c++) {//宽度为列数，每行遍历的次数
+          for (var r = 0; r < this.height; r++) {//高度为行数
+            var current = this.get(r, c)//第r行c列的值
+            var aliveNeighbors = this.neibors(r, c)
+            if (current == 1) {
+              if (aliveNeighbors < 2 || aliveNeighbors > 3) {
+                //死亡，无序修改
+              } else {
+                newWorld[r * this.width + c] = 1
+              }
+            } else {
+              if (aliveNeighbors == 3) {
+                newWorld[r * this.width + c] = 1
+              }
+            }
+          }
+        }
+        this.world = newWorld
+      }
+      //数组以checkbox形式打印到页面上
+      print() {
+        var html = ''
+        for (var r = 0; r < this.height; r++) {
+          for (var c = 0; c < this.width; c++) {
+            html += this.get(r, c) ? `<input type="checkbox" data-row="${r}" data-col="${c}" checked>` : `<input type="checkbox" data-row="${r}" data-col="${c}">`
+            //用到插值符号，所以用反引号更为便利
+          }
+          html += '<br>'
+        }
+        return html
+      }
+
+    }
+
+    //密度选择
+    var density = document.querySelector('#density')
+    rate = density.value
+    //每选一次select 重新绘制
+    density.addEventListener('change', function () {
+      rate = density.value
+      c = new Conway(30, 30)
+      c.randomFill(rate)
+      div.innerHTML = c.print()
+      function next() {
+        c.next()
+        div.innerHTML = c.print()
+      }
+    })
+    //绘制
+    var div = document.querySelector("#world")
+    c = new Conway(30, 30)
+    c.randomFill(rate)
+    div.innerHTML = c.print()
+    function next() {
+      c.next()
+      div.innerHTML = c.print()
+    }
+    //自动运行
+    var running = false
+    var autoId//声明在内部，则运行一次后下次函数访问不到
+    function Auto() {
+      if (running) {
+        running = false
+        event.target.textContent = 'AutoPlay'
+        clearInterval(autoId)
+      } else {
+        running = true
+        event.target.textContent = 'Stop'
+        autoId = setInterval(next, 500)
+      }
+    }
+
+    //主动点击
+    div.addEventListener('click', function (e) {
+      var target = e.target
+      var row = Number(target.dataset.row)
+      var col = Number(target.dataset.col)
+      c.set(row, col, target.checked ? 1 : 0)
+    })
+  </script>
+</body>
+
+</html>

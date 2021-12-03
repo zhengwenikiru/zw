@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3d</title>
+  <link rel="icon" href="img/avatar.ico">
+  <style>
+    body,
+    html {
+      height: 100%;
+      transform-style: preserve-3d;
+    }
+
+    .container {
+      width: 200px;
+      height: 200px;
+      margin: 200px auto;
+      position: relative;
+      transform-style: preserve-3d;
+      /* perspective: 2000px; */
+      /* 因为景深/视距问题导致立方体各个面不一样大，所以取消了视距 */
+      animation: move 6s linear infinite;
+    }
+
+    @keyframes move {
+      0% {
+        transform: rotateX(0deg) rotateY(180deg) rotateZ(0deg);
+      }
+
+      50% {
+        transform: rotateX(180deg) rotateY(360deg) rotateZ(180deg);
+      }
+
+      100% {
+        transform: rotateX(360deg) rotateY(540deg) rotatez(360deg);
+      }
+    }
+
+    .container div {
+
+      position: absolute;
+      font-size: 40px;
+      line-height: 200px;
+      text-align: center;
+      opacity: 0.5;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 200px;
+      height: 200px;
+      border: 1px solid rgb(158, 158, 158);
+    }
+
+    .front {
+      background-color: royalblue;
+      transform: rotateY(0deg) translateZ(100px);
+    }
+
+    .behind {
+      background-color: salmon;
+      transform: rotateY(0deg) translateZ(-100px);
+    }
+
+    .bottom {
+      background-color: seagreen;
+      transform: rotateX(90deg) translateZ(-100px);
+    }
+
+    .top {
+      background-color: slateblue;
+      transform: rotateX(90deg) translateZ(100px);
+    }
+
+    .left {
+      background-color: red;
+      transform: rotateY(90deg) translateZ(-100px);
+    }
+
+    .right {
+      background-color: violet;
+      transform: rotateY(90deg) translateZ(100px);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="front">6</div>
+    <div class="behind">1</div>
+    <div class="left">2</div>
+    <div class="right">3</div>
+    <div class="top">4</div>
+    <div class="bottom">5</div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>slider</title>
+  <link rel="icon" href="img/avatar.ico">
+  <style>
+    section {
+      position: relative;
+      width: 400px;
+      height: 300px;
+      margin: auto;
+      margin-top: 200px;
+    }
+
+    section input {
+      display: none;
+    }
+
+    section div.piece {
+      float: left;
+      width: 25%;
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* span里的图放在span外面，check时再移入 */
+    section div span {
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      background-repeat: no-repeat;
+      /* 设置图片大小 */
+      background-size: 400px 100%;
+      transition: 1s;
+      animation: move 1s linear;
+    }
+
+    /* 4个span各显示背景图的四分之一 */
+    section div.s1 span {
+      background-position: 0 0;
+    }
+
+    section div.s2 span {
+      background-position: -100px 0;
+    }
+
+    section div.s3 span {
+      background-position: -200px 0;
+    }
+
+    section div.s4 span {
+      background-position: -300px 0;
+    }
+
+    @keyframes move {
+      0% {
+        left: 0;
+      }
+
+      100% {
+        left: 100%;
+      }
+    }
+
+    /* 四个盒子各放4个span叠在一起，分别显示4张图的第一部分 */
+    section div.piece span:nth-child(1) {
+      background-image: url(img/z01.png);
+    }
+
+    section div.piece span:nth-child(2) {
+      background-image: url(img/z02.png);
+    }
+
+    section div.piece span:nth-child(3) {
+      background-image: url(img/z03.png);
+    }
+
+    section div.piece span:nth-child(4) {
+      background-image: url(img/z04.png);
+    }
+
+    /* 标签盒子定位到图片底下，图层级数在图片以上，并让空白部分平均分配 */
+    .labels {
+      width: 100%;
+      display: flex;
+      position: absolute;
+      bottom: 0;
+      z-index: 8;
+      justify-content: space-around;
+    }
+
+    /* 标签样式 */
+    section div.labels label {
+      color: #FFFFFF;
+      display: block;
+      width: 20px;
+      height: 20px;
+      line-height: 20px;
+      text-align: center;
+      background-color: skyblue;
+      border-radius: 9999px;
+      border: 3px solid rgb(109, 103, 97);
+      cursor: pointer;
+    }
+
+    input:nth-child(1):checked~div.piece span:nth-child(1),
+    input:nth-child(2):checked~div.piece span:nth-child(2),
+    input:nth-child(3):checked~div.piece span:nth-child(3),
+    input:nth-child(4):checked~div.piece span:nth-child(4) {
+      left: 0;
+      animation: none;
+      transition: 1s;
+      z-index: 3;
+    }
+
+    input:nth-child(1):checked~.labels label:nth-child(1),
+    input:nth-child(2):checked~.labels label:nth-child(2),
+    input:nth-child(3):checked~.labels label:nth-child(3),
+    input:nth-child(4):checked~.labels label:nth-child(4) {
+      color: skyblue;
+      background-color: #FFFFFF;
+    }
+
+    .leftlabels label,
+    .rightlabels label {
+      width: 30px;
+      height: 30px;
+      background-size: contain;
+      position: absolute;
+      z-index: 8;
+      border-radius: 999px;
+      display: none;
+      cursor: pointer;
+      background-color: #FFFFFF;
+      opacity: 0.7;
+    }
+
+    .rightlabels label {
+      background-image: url(img/leftarrow.png);
+      transform: rotateY(180deg);
+      right: 0;
+      bottom: 50%;
+    }
+
+    .leftlabels label {
+      background-image: url(img/leftarrow.png);
+      left: 0;
+      bottom: 50%;
+    }
+
+
+    input:nth-child(1):checked~.rightlabels label[for="a2"],
+    input:nth-child(2):checked~.rightlabels label[for="a3"],
+    input:nth-child(2):checked~.leftlabels label[for="a1"],
+    input:nth-child(3):checked~.rightlabels label[for="a4"],
+    input:nth-child(3):checked~.leftlabels label[for="a2"],
+    input:nth-child(4):checked~.leftlabels label[for="a3"] {
+
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <section>
+    <input type="radio" name="a" id="a1" checked>
+    <input type="radio" name="a" id="a2">
+    <input type="radio" name="a" id="a3">
+    <input type="radio" name="a" id="a4">
+    <div class="labels">
+      <label for="a1">1</label>
+      <label for="a2">2</label>
+      <label for="a3">3</label>
+      <label for="a4">4</label>
+    </div>
+    <div class="piece s1">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="piece s2">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="piece s3">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="piece s4">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="leftlabels">
+      <label for="a1"></label>
+      <label for="a2"></label>
+      <label for="a3"></label>
+      <label for="a4"></label>
+    </div>
+    <div class="rightlabels">
+      <label for="a1"></label>
+      <label for="a2"></label>
+      <label for="a3"></label>
+      <label for="a4"></label>
+    </div>
+  </section>
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>flex-email</title>
+  <style>
+    body,
+    html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
+    header {
+      width: 100%;
+      height: 50px;
+      background-color: gainsboro;
+    }
+
+    div {
+      width: 100%;
+      display: flex;
+      height: calc(100% - 50px);
+      flex-flow: wrap;
+    }
+
+    aside {
+      width: 80px;
+      background-color: greenyellow;
+    }
+
+    main {
+      flex-grow: 1;
+      background-color: hotpink;
+    }
+  </style>
+</head>
+
+<body>
+  <header></header>
+  <div>
+    <aside></aside>
+    <main></main>
+  </div>
+</body>
+
+</html>

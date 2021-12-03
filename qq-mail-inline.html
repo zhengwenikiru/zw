@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>inline-bolck</title>
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+    }
+
+    .head {
+      width: 100%;
+      height: 100px;
+    }
+
+    .left {
+      display: inline-block;
+      width: 180px;
+      height: calc(100vh - 100px);
+      margin-left: 2px;
+      border: 4px solid rgb(0, 135, 229);
+      border-radius: 10px;
+      overflow: auto;
+
+    }
+
+    .right {
+      display: inline-block;
+      width: calc(100vw - 208px);
+      height: calc(100vh - 100px);
+      /* vertical-align: top; */
+      overflow: auto;
+    }
+
+    .b {
+      margin-left: 1em;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="head">
+    <img src="img/qq-email.png" alt="图片加载失败" style="height: 80px;">
+  </div>
+
+  <span class="left">
+    <ul class="left1" style="border-bottom: 1px solid rgb(119, 165, 227); list-style: none;">
+      <li>写信</li>
+      <li>收信</li>
+      <li>通讯录</li>
+    </ul>
+    <ul class="left2" style="border-bottom: 1px solid rgb(119, 165, 227); list-style: none;">
+      <li>收件箱</li>
+      <li>星标邮件</li>
+      <li>群邮件</li>
+      <li>草稿箱</li>
+      <li>已发送</li>
+      <li>已删除</li>
+      <li>垃圾箱</li>
+      <li>其他邮件</li>
+    </ul>
+    <ul class="left3" style="list-style: none;">
+      <li>日历</li>
+      <li>简历</li>
+      <li>在线文档</li>
+      <li>每日悦读</li>
+      <li>附件收藏</li>
+      <li>文件中转站</li>
+    </ul>
+  </span><span class="right">
+    <div class="b"> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Temporibus quisquam culpa voluptatem
+      minima rem?Deseruntdignissimos dolorum ipsam ullam sapiente rem ea, praesentium corporis iusto eveniet labore
+      dicta officia
+      earum!Lorem</div>
+  </span>
+</body>
+
+</html>

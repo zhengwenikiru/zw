@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .mouse-shadow {
+      position: fixed;
+      background-color: cornflowerblue;
+      width: 5px;
+      height: 5px;
+      border-radius: 999px;
+    }
+  </style>
+</head>
+
+<body>
+  <script>
+    //或者2次Mousemove画一个点
+
+
+    var x = -999
+    var y = -999
+    window.addEventListener('mousemove', e => {
+      x = e.clientX
+      y = e.clientY
+    })
+
+    var stack = []
+    function getSpan() {
+      if (stack.length) {
+        return stack.pop()
+      } else {
+        return document.createElement('span')
+      }
+    }
+    //只创建有限个span，存入stack里，循环利用。释放内存
+    requestAnimationFrame(function move() {
+      var span = getSpan()
+      span.classList.add('mouse-shadow')
+      span.style.left = x + 'px'
+      span.style.top = y + 'px'
+      document.body.append(span)
+      setTimeout(() => {
+        document.body.removeChild(span)
+        stack.push(span)
+      }, 16 * 8)
+
+      requestAnimationFrame(move)
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .sun {
+      width: 100px;
+      height: 100px;
+      margin: auto;
+      position: absolute;
+      border-radius: 9999px;
+      background: linear-gradient(red, orange);
+      left: 350px;
+      top: 350px;
+      transform: rotateZ(45deg);
+    }
+
+    .earth {
+      width: 50px;
+      height: 50px;
+      position: absolute;
+      border-radius: 999px;
+      background: linear-gradient(skyblue, blue);
+      left: 375px;
+      top: 375px;
+    }
+
+    .moon {
+      width: 10px;
+      height: 10px;
+      position: absolute;
+      border-radius: 999px;
+      background: linear-gradient(grey, yellow);
+      left: 395px;
+      top: 395px;
+    }
+
+    .universe {
+      width: 800px;
+      height: 800px;
+      margin: auto;
+      background-color: black;
+      position: relative;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="universe">
+    <div class="sun"></div>
+    <div class="earth"></div>
+    <div class="moon"></div>
+  </div>
+  <script>
+    var sun = document.getElementsByClassName("sun")[0]
+    var earth = document.getElementsByClassName('earth')[0]
+    var moon = document.getElementsByClassName("moon")[0]
+    var anglemoon = 0
+    var angleearth = 0
+    var self = 0
+    function animate(time) {
+      angleearth = time * 0.0007
+      anglemoon = time * 0.003
+      var x1 = Math.cos(angleearth) * 150 + 380
+      var y1 = Math.sin(angleearth) * 150 + 380
+      //半径为100，圆心偏移量为380px
+      earth.style.left = x1 + "px"
+      earth.style.top = y1 + "px"
+      self = self == 360 ? 0 : (self + 3)
+      var x2 = Math.cos(anglemoon) * 50 + x1 + 25
+      var y2 = Math.sin(anglemoon) * 50 + y1 + 25
+      //地球半径为50，所以月亮公转的半径设为60，偏移量为地球左上角的坐标加上地球的半径
+      moon.style.left = x2 + "px"
+      moon.style.top = y2 + "px"
+      //地球太阳月球的自转
+      sun.style.transform = "rotateZ(" + self + "deg)"
+      earth.style.transform = "rotateZ(" + -self + "deg)"
+      moon.style.transform = "rotateZ(" + self + "deg)"
+      requestAnimationFrame(animate)
+    }
+    requestAnimationFrame(animate)
+  </script>
+</body>
+
+</html>

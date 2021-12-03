@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>footer</title>
+  <style>
+    body,
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    body {
+      height: 100vh;
+      position: relative;
+      min-height: 337px;
+    }
+
+    span {
+      display: inline-block;
+      line-height: 50px;
+      padding: 0 20px;
+      text-align: center;
+    }
+
+    span a {
+      text-decoration: none;
+      color: rgb(67, 67, 68);
+    }
+
+    header {
+      background-color: rgb(246, 246, 248);
+      height: 50px;
+      width: 100%;
+    }
+
+    header span:first-child {
+      margin-left: 80px;
+    }
+
+    div {
+      width: 900px;
+      height: 400px;
+      margin: auto;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 0;
+      padding-top: 20px;
+      width: 100%;
+      height: 36px;
+      background-color: rgb(246, 246, 248);
+    }
+
+    .footer>p {
+      text-align: center;
+      padding-left: 15px;
+    }
+
+    header span:nth-child(5) {
+      position: relative;
+    }
+
+    span:hover,
+    span a:hover {
+      background-color: rgb(225, 225, 225);
+      color: black;
+    }
+
+    /* 小按钮 */
+    header span:nth-child(5)::after {
+      content: '';
+      display: block;
+      position: absolute;
+      width: 0px;
+      height: 0px;
+      border: 4px solid transparent;
+      border-top-color: #5e5e5e;
+      right: 13px;
+      top: 50%;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <span><a href="#">Project name</a></span>
+    <span><a href="#">Home</a></span>
+    <span><a href="#">About</a></span>
+    <span><a href="#">Contact</a></span>
+    <span><a href="#">Dropdown</a></span>
+  </header>
+  <div>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti quibusdam dignissimos fuga ullam quod at?
+      Consequatur placeat doloremque explicabo nemo, corporis doloribus, laudantium sapiente, ipsa sunt facere eveniet
+      maxime similique. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla aliquam officiis sed laborum!
+      Fugiat debitis, dolor, quis itaque ipsam ad dolorem corrupti reiciendis iusto pariatur totam aliquid praesentium
+      molestiae. Reiciendis.
+      Quidem expedita natus cumque ratione at officiis dolorum in quas modi eos obcaecati voluptatibus accusamus porro
+      quae, harum fuga mollitia perspiciatis adipisci ipsam similique sunt nesciunt a? Enim, error sint.
+      Aspernatur distinctio ab consequuntur reprehenderit vero! Voluptates accusantium excepturi iste quia laudantium
+      omnis enim modi ab sint officia unde, laboriosam beatae ut explicabo perferendis earum tenetur, cum perspiciatis
+      cupiditate esse.
+      Iusto architecto beatae ipsum esse vero nihil sed iste vitae totam quaerat ut optio iure voluptates velit, natus
+      facilis maxime accusamus quo aut nam culpa nemo ab. Enim, quas voluptatibus!</p>
+  </div>
+  <div class="footer">
+    <p>My sticky footer content is here!</p>
+  </div>
+
+
+
+</body>
+
+</html>
