@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>记事本</title>
+  <link rel="icon" href="img/avatar.ico">
+  <style>
+     *{
+         border:none
+       }
+    body{
+      background:no-repeat  url(./img/bgi.png);
+      background-size: cover;
+    }
+    .page {
+      width: 200px;
+      height: 200px;
+      position: fixed;
+      user-select: none;
+      top: 10;
+      left: 10;
+    }
+
+    .headline {
+      width: 204px;
+      height: 21px;
+      background-color: hsl(0, 10%, 86%);
+      position: relative;
+      border-bottom: 1px solid #000;
+      padding:0;
+    }
+
+    #content {
+      background-color: rgba(256, 256, 256);
+      width: 200px;
+      height: 178px;
+    }
+
+    .eraser{
+      position: absolute;
+      right: 24px;
+      font-size: 10px;
+      width: 23px;
+      height: 21px;
+      padding: 0;
+    }
+    .all,.new{
+      border-radius: 10px;
+      border:none;
+      color: white;
+      background-color: blue; 
+       }
+      
+  </style>
+</head>
+
+<body>
+  <button class="all">清除所有便签</button>
+  <button class="new" onclick="creat()">新建便签</button> 
+  <div class="page" style="display: none;">
+    <div class="headline">
+      <button onclick="creat()" style="position: absolute;left: 0;width: 23px;height: 21px;">+</button>
+      <button onclick="clearcontent()" class="eraser"><img src="./img/橡皮擦.png" style="width: 20px;height: 20px;"></button>
+      <button class="delete" style="position: absolute;right: 0;width: 23px;height: 21px;">×</button>
+    </div>
+    <textarea id="content"></textarea>
+  </div>
+  <script>
+    var maxZindex = 4
+    document.addEventListener('mousedown', function (e) {
+      if (!e.target.classList.contains('headline')) {
+        return
+      }
+      var mouseStartX = e.clientX
+      var mouseStartY = e.clientY
+      //鼠标相对于窗口的初始位置
+      var elt = e.target.parentNode
+      elt.style.zIndex = maxZindex++
+      //置顶点到的笔记 
+      var eltStartX = elt.getBoundingClientRect().left
+      var eltStartY = elt.getBoundingClientRect().top
+      //笔记页相对于窗口的位置
+      window.addEventListener('mousemove', function move(event) {
+        if (event.which === 0 || event.buttons === 0) {
+          window.removeEventListener('mousemove', move)
+          return
+        }
+        var mouseCurX = event.clientX
+        var mouseCurY = event.clientY
+        //鼠标当前位置
+        var dx = mouseCurX - mouseStartX
+        var dy = mouseCurY - mouseStartY
+        //鼠标移动的距离
+        var left = eltStartX + dx
+        var top = eltStartY + dy
+        //笔记页需要移动的距离
+        //移动到视口边缘，吸附效果
+        if (left < 0) {
+          left = 0
+        }
+        if (left > window.innerWidth - elt.offsetWidth) {
+          left = window.innerWidth - elt.offsetWidth
+        }
+
+        if (top < 0) {
+          top = 0
+        }
+        if (top > window.innerHeight - elt.offsetHeight) {
+          top = window.innerHeight - elt.offsetHeight
+        }
+
+        elt.style.left = left + 'px'
+        elt.style.top = top + 'px'
+      })
+    })
+    //拖拽功能end
+
+    //存
+    function saveToStorage() {
+      var store = []
+      var pages = document.querySelectorAll('.page')
+      for (let page of pages) {
+        var obj = {}
+        obj['top'] = page.style.top
+        obj['left'] = page.style.left
+        obj['zIndex'] = page.style.zIndex
+        obj['content'] = page.lastElementChild.value
+        store.push(obj)
+      }
+      window.localStorage.setItem('Information', JSON.stringify(store))
+      //所有的页面以文本形式保存
+      console.log('save')
+    }
+
+    //× 删除,点击×就删除x所在按钮的父亲的父亲,即一页
+    document.addEventListener('mousedown', function (e) {
+      if (e.target.classList.contains('delete')) {
+        e.target.parentNode.parentNode.remove()
+      }
+    })
+  
+ 
+    //删除所有笔记
+    var clear = document.querySelector('.all')
+    var pages = document.getElementsByClassName('page')
+    clear.addEventListener('click', function () {
+      let cf=window.confirm('确定删除所有便签吗')
+      if (cf){
+        for (let i = pages.length - 1; i > 0; i--) {
+          document.body.removeChild(pages[i])
+        }
+        localStorage.clear()
+      }else{
+        return
+      }
+    })
+    //新建
+    var mode = document.querySelector('.page')
+    function creat() {
+      let node = mode.cloneNode(true)
+      node.style.display='block'
+      document.body.append(node)
+    }
+
+    //页面加载时以及存储信息时读取
+    //输入过程中save信息，防抖！！！(还未写)
+    function reader() {
+      if (!localStorage.Information) {
+        return
+      }
+      var array = JSON.parse(localStorage.Information)
+      for (let i = 0; i < array.length; i++) {
+        let node
+        if (i > 0) {
+          node = mode.cloneNode(true)
+        } else {
+          node = mode
+        }
+        let obj = array[i]
+        node.style.top = obj.top
+        node.style.left = obj.left
+        node.style.zIndex = obj.zIndex
+        node.lastElementChild.value = obj.content
+        if (i > 0) {
+          document.body.append(node)
+        }
+      }
+    }
+
+  //清空，点击橡皮则清空当前页的所有内容
+  var eraser = document.querySelector('.eraser')
+    function clearcontent() {
+       eraser.parentNode.nextSibling.nextSibling.value=''
+    }
+    //当localstorage存储的数据发生变化时，会触发storage事件
+    document.body.addEventListener('mouseup', function () {
+      saveToStorage()
+
+    })
+    document.body.addEventListener('keyup', function () {
+      saveToStorage()
+
+    })
+    window.addEventListener('load', function () {
+      reader()
+
+    })
+    window.addEventListener('storage', function () {
+      reader()
+
+    })
+
+  </script>
+</body>
+
+</html>
