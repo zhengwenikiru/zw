@@ -14,7 +14,7 @@
           <label><input type="radio" v-model="settings[key]" value="true"> 是 </label>
           <label><input type="radio" v-model="settings[key]" value="false"> 否 </label>
         </div>
-        <div v-else-if="/^[0-9]+&/.test(val)">
+        <div v-else-if="/^[0-9]\d*$/.test(val)">
         <!-- 正则匹配，如果val是数字 -->
         <input type="number"  v-model="settings[key]">
         </div>
@@ -189,6 +189,8 @@ let optionDesc = {
   "truncate-console-readout": "缩短控制台输出内容",
 }
 export default {
+  name:'Settings',
+  props:['aria2'],
   data(){
     return{
       settings:null,
@@ -197,13 +199,13 @@ export default {
   },
   methods:{
    async changeGlobalOption(){
-     await aria2.changeGlobalOption(this.settings)
+     await this.aria2.changeGlobalOption(this.settings)
      // 部分设置不可更改，即使input了，也不会修改成功，所以再获取一次设置参数
-         this.settings = await window.aria2.getGlobalOption()
+         this.settings = await this.aria2.getGlobalOption()
     }
   },
  async mounted(){
-    this.settings = await window.aria2.getGlobalOption()
+    this.settings = await this.aria2.getGlobalOption()
   }
 }
 </script>

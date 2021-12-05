@@ -14,6 +14,7 @@
 <script>
 export default {
   name: 'Completed',
+  props:['aria2'],
   data() {
     return {
       tasks: [],
@@ -25,10 +26,18 @@ export default {
     },
   },
   async mounted() {
-    this.tasks = await window.aria2.tellStopped(0, 1000)
-    this.intervalId = setInterval(async () => {
-      this.tasks = await window.aria2.tellStopped(0, 1000)
-    }, 1000)
+    try{
+      this.tasks = await this.aria2.tellStopped(0, 1000)
+      this.intervalId = setInterval(async () => {
+        this.tasks = await this.aria2.tellStopped(0, 1000)
+      }, 1000)
+    }catch(e){
+          if(e == 'WS_CONNECT_ERROR'){
+               clearInterval(this.intervalId)
+             }else{
+               throw e
+             }
+    }
   },
   beforeDestroy() {
     clearInterval(this.intervalId)

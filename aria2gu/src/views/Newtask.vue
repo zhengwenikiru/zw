@@ -34,7 +34,9 @@ function getFileContent(file){
     fr.readAsDataURL(file)
   })
 }
-export default {
+export default { 
+  name:'Newtasks',
+  props:['aria2'],
   data(){
     return{
       uris:''
@@ -44,12 +46,12 @@ export default {
     async startBT(e){
       var file = e.target.files[0]
       var btFileContent=await getFileContent(file)
-      await window.aria2.addTorrent(btFileContent)
+      await this.aria2.addTorrent(btFileContent)
       this.$router.push('/')
     },
    async start(){
       var uris = this.uris.split('/n').map(it=>it.trim())
-      var taskIds = await window.aria2.addUri(uris)
+      var taskIds = await this.aria2.addUri(uris)
       this.$router.push('/')// 回到首页
     }
   }

@@ -41,6 +41,8 @@
 
 <script>
 export default {
+  name:'taskDetail',
+  props:['aria2'],
   data(){
     return{
       task:null,
@@ -57,7 +59,7 @@ export default {
     },
   },
  async mounted(){
-    this.task = await window.aria2.tellStatus(this.$route.params.gid)
+    this.task = await this.aria2.tellStatus(this.$route.params.gid)
     this.bitfield = this.task.bitfield.split('').map(it=>parseInt(it,16)).toString(2).padStart(4,'0')
   }
 }
