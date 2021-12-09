@@ -6,10 +6,10 @@
     /* display: flex; */
     cursor: pointer;
     &.selected {
-      background-color: #ddd;
+      background-color: rgb(221, 221, 221);
     }
     &:hover {
-      background-color: #eee;
+      background-color: skyblue;
     }
   }
 </style>
@@ -17,11 +17,11 @@
   <div class="downloading">
     <h2>正在下载</h2>
     <div>
-      <button @click="execSelected('pause')">暂停</button>
-      <button @click="execSelected('unpause')">开始</button>
-      <button @click="execSelected('remove')">删除</button>
-      <button @click="selectAll">全选</button>
-      搜索: <input type="text" v-model="searchText"/>
+      <el-button type="primary" icon="el-icon-video-pause" @click="execSelected('pause')">暂停</el-button>
+      <el-button type="primary" icon="el-icon-video-play" @click="execSelected('unpause')">开始</el-button>
+      <el-button type="primary" icon="el-icon-circle-close" @click="execSelected('remove')">删除</el-button>
+      <el-button type="primary" icon="el-icon-check" @click="selectAll">全选</el-button>
+      <el-input size="small" placeholder="请输入内容" prefix-icon="el-icon-search" v-model="searchText"/>
     </div>
     <ul>
       <li v-for="task of visibleTasks" :class="{selected: selected.includes(task.gid)}" :key="task.gid" @click="toggleSelect(task)">
@@ -38,8 +38,6 @@
         <router-link @click.native.stop :to="{name: 'taskDetail', params: {gid: task.gid}}">详情</router-link>
       </li>
     </ul>
-
-    <div>当前排序列：{{ sortColumn.label }} - {{ sortColumn.order }}</div>
     <el-table
       @sort-change="sortChange"
       :data="visibleTasks"
@@ -122,12 +120,12 @@ export default {
     }, 100)
   },
   methods: {
-    sortChange({ column, prop, order }) {
-      this.sortColumn = column
-    },
+    // sortChange({ column, prop, order }) {
+    //   this.sortColumn = column
+    // },
     getSpeed(row) {
       // console.log(args)
-      return (row.completedLength / row.totalLength * 100).toFixed(2) + '%'
+      return (row.downloadSpeed / 1024 ).toFixed(2) + 'k/s'
     },
     // goDetail(task) {
     //   this.$router.push('/task/' + task.gid)
@@ -200,7 +198,7 @@ export default {
       if (task.completedLength == 0) {
         return 0
       } else {
-        return (task.completedLength / task.totalLength * 100) ||fixed +'%'
+        return (task.completedLength / task.totalLength * 100).toFixed(2) +'%'
       }
     },
   },

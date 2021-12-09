@@ -5,7 +5,7 @@ class Aria2Client extends EventEmitter {
     super()
     this.options = options
     this.websocket = new WebSocket(`ws://${options.host}:${options.port}/jsonrpc`)
-
+// 连上后，通过发送请求控制aria2
     this.connectPromise = new Promise((resolve, reject) => {
       this.websocket.addEventListener('open', () => {
         resolve()
@@ -109,6 +109,7 @@ class Aria2Client extends EventEmitter {
             method: `aria2.${methodName}`,
             params: [`token:${this.options.secret}`, ...args]
           }))
+          // 发送符合格式的json字符串控制aria2，
           console.log('after send')
         } else {
           reject('WS_CONNECTION_ERROR')

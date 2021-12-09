@@ -43,6 +43,7 @@
 export default {
   data() {
     var servers = JSON.parse(localStorage.getItem('aria2Servers')) || []
+    // jsonparse不能解析undefined 用getItem就能返回null，而null是能解析的
     return {
       servers: servers,
       dialogFormVisible: false,
@@ -82,7 +83,7 @@ export default {
       Object.assign(this.newServer, targetServer)
 
       this.dialogFormVisible = true
-    },
+    },// 显示编辑页面，并将当前编辑的服务器信息传到编辑页面
     addServer() {
       if (this.editIndex == -1) { // 添加服务器
         this.servers.push(this.newServer)
@@ -94,11 +95,8 @@ export default {
       } else { // 修改现存的服务器
         console.log('changed server')
         // this.servers[this.editIndex] = this.newServer
-
         this.servers.splice(this.editIndex, 1, this.newServer)
         // Vue.set(this.servers, this.editIndex, this.newServer)
-
-
         this.newServer = {
           host: '127.0.0.1',
           port: 6800,

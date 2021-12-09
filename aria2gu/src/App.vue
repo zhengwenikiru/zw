@@ -8,9 +8,12 @@ html, body {
   width: 100%;
   height: 100%;
   display: flex;
-  flex-flow: column;
+  min-width: 550px;
+  border: 10px solid skyblue;
+  border-radius: 30px;
 }
 .main {
+  max-width: 800px;
   flex-grow: 1;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -24,7 +27,7 @@ html, body {
 }
 
 #nav {
-  width: 120px;
+  width: 80px;
   border-right: 1px solid;
   padding: 10px;
   flex-grow: 0;
@@ -36,7 +39,7 @@ html, body {
     color: #2c3e50;
 
     &.router-link-exact-active {
-      color: #42b983;
+      color: skyblue;
     }
   }
 }
@@ -45,9 +48,8 @@ html, body {
 }
 </style>
 <template>
-  <div id="app">
-    <div class="main">
-      <div id="nav">
+  <el-container id="app">
+      <el-aside width="120px" id="nav">
         <select v-model="selectedServer" @change="switchServer">
           <option v-for="(server, idx) of servers" :value="server" :key="idx">{{ server.name || (server.host + ':' + server.port) }}</option>
         </select>
@@ -57,11 +59,13 @@ html, body {
         <router-link to="/new">新建下载</router-link>
         <router-link to="/settings">设置</router-link>
         <router-link to="/servers">服务器列表</router-link>
-      </div>
-      <router-view :aria2="aria2" @servers-changed="servers = $event"/>
-    </div>
-    <div class="global-stat">全局上传速度: {{  globalStat.uploadSpeed  }} 全局下载速度: {{globalStat.downloadSpeed}}</div>
-  </div>
+      </el-aside>
+  <el-container>
+      <el-main class="main">
+      <router-view  :aria2="aria2" @servers-changed="servers = $event"/>
+    </el-main>
+  </el-container>
+  </el-container>
 </template>
 <script>
 import Aria2Client from './aria2-client.js'
@@ -88,9 +92,8 @@ export default {
       console.log('连接新的服务器...')
       this.connectionStatus = '连接中...'
       var aria2 = new Aria2Client(this.selectedServer)
-
       this.aria2 = aria2
-
+      // 重新为aria2赋值
       try {
         await aria2.ready()
         this.connectionStatus = '已连接'
@@ -104,14 +107,13 @@ export default {
           this.globalStat = await this.aria2.getGlobalStat()
         } catch(e) {
           if (e == 'WS_CONNECTION_ERROR') {
-            this.$alert('连接失败')
-            console.log(this.intervalId)
+        
             clearInterval(this.intervalId)
           } else {
             throw e
           }
         }
-      }, 3000)
+      }, 3000) // 每3s刷新一次全局状态
       console.log('app interval id', this.intervalId)
     }
   },
@@ -138,7 +140,7 @@ export default {
 
     } catch(e) {
       if (e == 'WS_CONNECTION_ERROR') {
-        this.$alert('连接失败')
+      
       } else {
         throw e
       }

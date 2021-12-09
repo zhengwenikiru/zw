@@ -17,25 +17,18 @@
   <dt>任务名称</dt>
   <dd>{{ getFilename(task) }}</dd>
   <dt>任务大小</dt>
-  <dd></dd>
-  <dt>进度</dt>
-  <dd></dd>
+  <dd>{{ (task.files[0].length/1024/1024).toFixed(2) }}MB </dd>
   <dt>下载地址</dt>
-  <dd></dd>
-  <dt>文件列表</dt>
-  <dd>
-    <ul>
-      <li v-for="file of task.files" :title="file.path" :key="file.path"></li>
-    </ul>
-  </dd>
+  <dd>{{ task.files[0].uris[0].uri }}</dd>
   <dt>目标路径</dt>
-  <dd></dd>
+  <dd>{{ task.files[0].path }}</dd>
   <dt>区块信息</dt>
   <dd>
     <span v-for="i of Number(task.numPieces)" :key="i" class="piece" :class="{complete: bitfield[i-1]=='1'}"></span>
     <!-- 完成的片为绿色，未完成的为灰色 -->
   </dd>
 </dl>
+
   </div>
 </template>
 
