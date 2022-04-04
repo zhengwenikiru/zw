@@ -15,7 +15,7 @@ label{
     <div>
       <textarea v-model="uris" cols="50" rows="8"></textarea>
     </div>
-    <button @click="start">确定</button>
+    <el-button type="primary" plain @click="start">确定</el-button>
   </div>
 </template>
 

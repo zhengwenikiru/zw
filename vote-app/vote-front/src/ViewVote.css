@@ -1,0 +1,20 @@
+/* .user-id {
+  --size: 24px;
+  width: var(--size);
+  height: var(--size);
+  line-height: var(--size);
+  text-align: center;
+  border-radius: 999px;
+  display: inline-block;
+  border: 1px solid;
+  margin: 2px;
+} */
+.father {
+  display: grid;
+  place-content: center;
+}
+
+.father > span {
+  display: block;
+  width: 100%;
+}

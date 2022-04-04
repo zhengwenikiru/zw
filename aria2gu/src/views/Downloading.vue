@@ -120,16 +120,16 @@ export default {
     }, 100)
   },
   methods: {
-    // sortChange({ column, prop, order }) {
-    //   this.sortColumn = column
-    // },
+    sortChange({ column, prop, order }) {
+      this.sortColumn = column
+    },
     getSpeed(row) {
       // console.log(args)
       return (row.downloadSpeed / 1024 ).toFixed(2) + 'k/s'
     },
-    // goDetail(task) {
-    //   this.$router.push('/task/' + task.gid)
-    // },
+    goDetail(task) {
+      this.$router.push('/task/' + task.gid)
+    },
     async updateList() {
       try {
         this.tasks = [

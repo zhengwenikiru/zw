@@ -89,10 +89,10 @@
       <pre id="res">
       </pre>
       <textarea name="" id="suitstr" spellcheck="false" cols="30" rows="10" onkeyup="run()" onscroll="setScroll()">
-        <!-- 在标签内添加了多个可触发事件 -->
-        <!-- 每个调用函数，浏览器会先在该元素内部找同名函数，然后按顺序从document->全局 
-        textarea里自带一个scroll函数，并且该函数拿不到滑动高度，所以Setscroll不能命名为scroll-->
       </textarea>
+      <!-- 在标签内添加了多个可触发事件 -->
+      <!-- 每个调用函数，浏览器会先在该元素内部找同名函数，然后按顺序从document->全局 
+      textarea里自带一个scroll函数，并且该函数拿不到滑动高度，所以Setscroll不能命名为scroll-->
       <!-- 给文本框id后，id.value就能访问到该输入框内的内容，也可以给其赋值 -->
       <!-- 匹配结果框 -->
       <!-- 使用res.innerHTML可以给id名为res的目标增加代码 -->

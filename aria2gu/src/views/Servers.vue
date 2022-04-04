@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>管理服务器</h2>
-    <button @click="dialogFormVisible = true; editIndex = -1">添加</button>
+    <el-button type="primary" @click="dialogFormVisible = true; editIndex = -1">添加</el-button>
 
     <el-dialog title="添加服务器" :visible.sync="dialogFormVisible">
 
@@ -28,10 +28,10 @@
 
     <ul>
       <li v-for="(server, idx) of servers" :key="idx">
-        Name: {{ server.name }}
-        Host: {{ server.host }}
-        Port: {{ server.port}}
-        Secret: <input type="password" :value="server.secret" />
+        名称: {{ server.name }}
+        域名: {{ server.host }}
+        端口: {{ server.port}}
+        密码: <input type="password" :value="server.secret" />
         <button @click="removeServer(idx)">删除</button>
         <button @click="editServer(idx)">编辑</button>
       </li>

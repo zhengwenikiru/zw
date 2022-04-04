@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TodosByReact</title>
+  <script  src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script  src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    var { Component} = React
+    
+    class Todo extends Component{
+      state = {
+        show:'all',
+        editingIdx:-1,
+        todos:[{
+          text:'eat',
+          done:true,
+        },{
+          text:'drink',
+          done:'false',
+        }]
+      }
+
+
+      render(){
+        return(
+          <div>
+            <div>
+              <input type="checkbox" />
+              <input type="text" />
+            </div>
+            <ul>
+              {
+                this.state.todos.map((todo,idx) =>{
+                  return(
+                    <li key={idx}>
+                      <input type="checkbox" />
+                      <span>{todos.text}</span>
+                      <button>&times;</button> 
+                    </li>
+                  ) 
+                })
+              }
+            </ul>
+            <div>
+              <span> items left</span>
+              <div>
+                <label><input type="radio" />All</ label>
+                <label><input type="radio" />Active</ label>
+                <label><input type="radio" />Completed</ label>
+                </div>
+                {
+                  // this.state.todos.some(it =>it.done)
+                  // ?
+                  // <button>Clear completed</button>
+                  // : 
+                  // null
+                  this.state.todos.some(it =>it.done) && <button>Clear completed</button>
+                }
+            </div>
+          </div>
+        )
+      }
+    }
+    // render函数中 ul里花括号中插值的是map的运算结果，是一个数组，数组的每一项都是一个li的jsx表达式->即是若干个ReactElement组成的
+    //react里没有v-if 实现相同效果只能用插值+  ？判断语句
+
+
+
+    ReactDOM.render(
+        <Todo />,
+        document.getElementById('root')
+      );
+
+ </script>
+</body>
+</html>
