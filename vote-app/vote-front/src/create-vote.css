@@ -2,31 +2,40 @@
   width: 100%;
   border: none;
 }
+#crvo >div,#crvo{
+  text-align: center;
+}
 
-#crvo > input {
-  border: none;
-  border-bottom: 1px solid #000;
+#crvo > .tt>.ant-input {
+  outline: none;
+  /* border-bottom: 1px solid #000; */
   width: 100%;
   height: 40px;
 }
 .bottom {
-  width: 100%;
+  width: 80%;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
 }
 .bottom > div {
   display: inline-block;
 }
+ul>li>div>.ant-input{
+width: 90%;
+}
 .time {
-  float: right;
-  text-align: center;
   opacity: 0.6;
+}
+.add{
+  margin-right: 20px;
 }
 .time > span {
   display: inline-block;
-  margin-top: 3%;
+  margin-top: 1px;
 }
 .time > input {
   float: right;
-  width: 75%;
   border: none;
 }
 .any {

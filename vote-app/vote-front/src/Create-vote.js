@@ -6,7 +6,7 @@ import { useInput ,useQuery,useBooleanInput, forceLogin} from "./hooks"
 import { useMemo, useState } from "react"
 import dayjs from "dayjs"
 import './create-vote.css'
-import { Divider,Button} from 'antd'
+import { Divider,Button,Input} from 'antd'
 import 'antd/dist/antd.css';
 
 //use-immer是对useState的简单包装。不必再调produce，可以对任意数据类型进行修改
@@ -86,24 +86,24 @@ import 'antd/dist/antd.css';
     <div id="crvo">
         <Divider orientation="left">创建投票</Divider>
    
-      <div className="tt"><input type="text" placeholder="投票标题" {...title}/></div>
-      <div className="tt"><input type="text" placeholder="补充描述(选填)" {...desc}/></div>
-    <ol>
+      <div className="tt"><Input type="text" placeholder="投票标题" {...title}/></div>
+      <div className="tt"><Input type="text" placeholder="补充描述(选填)" {...desc}/></div>
+    <ul>
       {
         options.map((option, idx) =>
           <li key={idx} >
             <div>
-            <input  spellCheck="false" type="text" placeholder="选项" value={option} onChange={e => setOption(idx, e.target.value)}/>
+            <Input  spellCheck="false" type="text" placeholder="选项" value={option} onChange={e => setOption(idx, e.target.value)}/>
             <button tabIndex="-1" onClick={() => remove(idx)}>删除</button>
             </div>
           </li>
         )
       }   
-    </ol>
+    </ul>
 
        <div className='bottom'>
-        <div className="add"> <button onClick={() => setOptions(options => [...options,''])}>添加选项</button></div>
         <div className="any" title="此项选中后一经投票无法修改"> 匿名投票: <input  type="checkbox"  {...anonymous} /></div>
+        <div className="add"> <button onClick={() => setOptions(options => [...options,''])}>添加选项</button></div>
         <div className="time"><span>截止日期:</span><input type="datetime-local" {...deadline} /> </div>      
        </div>
   
