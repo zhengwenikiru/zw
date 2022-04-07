@@ -81,10 +81,7 @@ app.get('/current-user',(req,res,next)=>{
 //登出
 app.get('/logout',(req,res,next)=>{
   res.clearCookie('loginUser')
-  res.json({
-    code:0,
-    result:{}
-  })
+  res.end()
 })
 
 module.exports = app

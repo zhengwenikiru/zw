@@ -60,12 +60,11 @@ wss.on('connection', (ws, req) => {
   }
 })
 
-
 const accountRouter = require('./account')
 const db = require('./db')
 const exp = require('constants')
 
-const port = 8080
+const port = 80
 
 let storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -112,7 +111,6 @@ app.use((req, res, next) => {
 })
 
 app.use('/account', accountRouter)
-
 // POST   /vote    创建投票，信息在请求体
 // GET    /vote/8  获取投票题目的信息
 // DELETE /vote/8  删除8号投票
@@ -166,6 +164,8 @@ app.post('/vote', (req, res, next) => {
   }
 
 })
+
+//获取投票信息
 app.get('/vote/:voteId', (req, res, next) => {
   var { voteId } = req.params
 
@@ -205,6 +205,8 @@ app.get('/vote/:voteId', (req, res, next) => {
     })
   }
 })
+
+//删除对应投票
 app.delete('/vote/:voteId', (req, res, next) => {
   if (req.loginUser) {
     var { voteId } = req.params
