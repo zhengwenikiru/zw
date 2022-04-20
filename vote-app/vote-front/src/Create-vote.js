@@ -3,11 +3,12 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { produce } from "immer"
 import { useInput ,useQuery,useBooleanInput, forceLogin} from "./hooks"
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import dayjs from "dayjs"
 import './create-vote.css'
-import { Divider,Button,Input} from 'antd'
+import { Divider,Button,Input,Tooltip} from 'antd'
 import 'antd/dist/antd.css';
+import { ArrowLeftOutlined } from "@ant-design/icons"
 
 //use-immer是对useState的简单包装。不必再调produce，可以对任意数据类型进行修改
 //传给setOption的函数就是用于修改的函数§
@@ -57,6 +58,7 @@ import 'antd/dist/antd.css';
   }
 
 
+
   return(
     // <div id="fa">
     //   <h1 style={{margin:'0 auto'}}>创建投票</h1>
@@ -84,6 +86,7 @@ import 'antd/dist/antd.css';
     // </div>
 
     <div id="crvo">
+      <Button style={{float:'left'}} type="primary" shape="round" icon={<ArrowLeftOutlined/>} onClick={()=>navigate(-1)} />
         <Divider orientation="left">创建投票</Divider>
    
       <div className="tt"><Input type="text" placeholder="投票标题" {...title}/></div>

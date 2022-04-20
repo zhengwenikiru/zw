@@ -9,12 +9,17 @@
   border: 1px solid;
   margin: 2px;
 } */
-.father {
-  display: grid;
-  place-content: center;
+.vv {
+  width: 100%;
+  /* background-color: bisque; */
 }
 
-.father > span {
+/* .vv > span {
   display: block;
   width: 100%;
+} */
+.vv>.voteinfo{
+  width: 400px;
+margin:  0 auto;
+  /* background-color: aqua; */
 }

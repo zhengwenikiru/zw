@@ -1,0 +1,21 @@
+
+
+#reg-box{
+  border: 1px ;
+  border-radius: 9px;
+  margin: 0 auto;
+  width: 400px;
+  height: 200px;
+  margin-top: 20vh;
+  background-color:  rgba(0, 102, 255, 0.323);
+  display: flex;
+  flex-direction: column;
+}
+#reg-box > .box3{
+  margin: auto;
+  width: 220px;
+  text-align: right;
+}
+#reg-box > .box4{
+  margin: auto;
+}

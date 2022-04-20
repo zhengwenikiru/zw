@@ -59,7 +59,7 @@ export function useAxios(config) {
       setError(e.toString())
       setLoading(false)
     })
-
+//返回的函数在组件销毁后执行，即关闭axios请求
     return () => source.cancel()
   }, [config.url, i])
 
@@ -82,7 +82,7 @@ export function useUser(){
 }
 
 
-//强制登陆的高阶组件，用它包裹的组件必须登陆才能显示
+//强制登陆的高阶组件，用它包裹的组件必须登陆才能显示,view-vote,creat-vote,my-votes
   export function forceLogin(Comp){
     function ForceLoginComp(props){
       var userInfo = useUser()

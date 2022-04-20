@@ -1,7 +1,12 @@
-import{useNavigate}from 'react-router-dom'
+import{Link, useNavigate}from 'react-router-dom'
 import axios from'axios'
 import { useInput, useUser } from "./hooks"
 import { useEffect } from 'react'
+import './login.css'
+import {Button,Input} from 'antd'
+import 'antd/dist/antd.css';
+
+
 
 export default function Login(){
 var name = useInput()
@@ -11,7 +16,7 @@ var userInfo = useUser()
 
 useEffect(()=>{
   if(userInfo.data){
-    navigate(-1)
+    navigate('/main')
   }
 })//登陆成功了的话，不必进入该页面。回退
 
@@ -34,12 +39,13 @@ alert(data.msg)
 
 
   return(
-    <div>
-      <div>Account:</div>
-      <input type="text" {...name}/>
-      <div>Secret:</div>
-      <input type="password" {...password}/>
-    <div><button onClick={login}>Login</button></div>
+    <div className='login-box'>
+
+      <div className='box1'>
+      <div><Input placeholder='用户名' type="text" {...name}/></div>
+      <div><Input placeholder='密码' type="password" {...password}/></div>
+      </div>
+    <div className='box2'><Button type='primiry' shape='round' onClick={login}>登陆</Button> <Link to='/register'>注册</Link></div>
     </div>
   )
 }

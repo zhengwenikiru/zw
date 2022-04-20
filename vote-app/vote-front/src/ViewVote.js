@@ -1,6 +1,5 @@
 // 投票查看及交互页面
-
-import { useParams } from "react-router-dom"
+import { useParams,useNavigate } from "react-router-dom"
 import axios from "axios"
 import { useEffect, useState, useMemo } from "react"
 import { forceLogin, useAxios } from './hooks'
@@ -10,6 +9,7 @@ import dayjs from 'dayjs'
 import { useImmer } from "use-immer"
 import{ Button,Divider,Progress } from 'antd'
 import 'antd/dist/antd.css';
+import { ArrowLeftOutlined } from "@ant-design/icons"
 
 
 
@@ -35,24 +35,22 @@ function ViewVote({ userInfo }) {
   var { loading, data, error, update } = useAxios({ url: `/vote/${voteId}` })
   var [userVotes, setUserVotes] = useState() // 从websocket上获取到的实时信息
   var [selectedOptionIds, setSelectedOptionIds] = useImmer([])
-
+  var navigate = useNavigate()
   useEffect(() => {
     // 如果还在加载，或者是超过截止时间，则什么也不做
     if (loading || Date.now() > new Date(data.vote.deadline).getTime()) {
       return
     }
-
     var wsUrl = `${window.location.protocol.replace('http', 'ws')}//${window.location.host}/realtime-voteinfo/${voteId}`
-
     var ws = new WebSocket(wsUrl)
-
     // 实时接受服务器发来的最新消息
     ws.onmessage = function (e) {
       var data = JSON.parse(e.data)
+      // console.log(data)
       setUserVotes(data)
     }
-
     return () => ws.close()
+  //组件销毁时关闭ws连接
   }, [loading, voteId])
 
   // 为某个选项投票/或取消投票
@@ -88,15 +86,15 @@ function ViewVote({ userInfo }) {
     if (data.vote.anonymous) {
       if (votes.some(it => it.userId === userInfo.data.userId)) {
         return
-      }
+      }//匿名则是选中选项
       selectOption(option)
-    } else {
+    } else {//公开
       voteOption(option)
     }
   }
 
   var votes = userVotes ?? data?.userVotes ?? []
-
+//从当前用户的
   var groupedVotes    = useMemo(() => _.groupBy(votes, 'optionId'), [votes])//用投票选项ID分组,
   //{optionId:[]}
   var uniqueUserCount = useMemo(() => _.uniqBy(votes, 'userId').length, [votes]) // 去掉同用户投票后的数量,即选项有多少人投了
@@ -105,12 +103,13 @@ function ViewVote({ userInfo }) {
   if (loading) return 'Loading...'
 
   return (
-    <div className="father">
-      <div>
+    <div className="vv">
+            <Button style={{float:'left'}} type="primary" shape="round" icon={<ArrowLeftOutlined/>} onClick={()=>navigate(-1)} />
          <Divider orientation="left"><h2>投票标题:{data.vote.title}</h2></Divider>
-    
       <span style={{color: '#3269da'}}>[{data.vote.multiple ? '多选' : '单选'}](多投只取第一个)</span>
       <span style={{color: '#3269da'}}>[{data.vote.anonymous ? '匿名' : '公开'}]</span>
+      <div className="voteinfo">
+    
       <h3>描述:{data.vote.desc}</h3>
       <ol>
         {

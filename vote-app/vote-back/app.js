@@ -23,7 +23,7 @@ const voteWsMap = {
   // 5: [ws, ws, ws, ws], 
 }
 
-console.log('voteWsMap', voteWsMap)
+// console.log('voteWsMap', voteWsMap)
 
 // ws://localhost:3001/realtime-voteinfo/2
 //ws请求连接时走下面
@@ -62,9 +62,9 @@ wss.on('connection', (ws, req) => {
 
 const accountRouter = require('./account')
 const db = require('./db')
-const exp = require('constants')
+// const exp = require('constants')
 
-const port = 80
+const port = 8080
 
 let storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -90,7 +90,7 @@ app.use(cors({
   credentials: true, // 让预检请求的响应中有Access-Control-Allow-Credentials: true这个头，以允许跨域请求带上cookie
 }))
 
-app.use(express.static(__dirname + '/build'))
+// app.use(express.static(__dirname + '/build'))  使前端的打包文件服务于后端
 app.use(cookieParser(cookieSecret)) // cookie签名的密码
 app.use('/uploads', express.static(__dirname + '/uploads')) // 用于响应用户上传的头像请求
 app.use(express.json()) // 解析json请求体的中间件
@@ -222,7 +222,7 @@ app.delete('/vote/:voteId', (req, res, next) => {
   } else {
     res.status(401).json({
       code: -1,
-      msg: 'mei deng lu'
+      msg: '未登陆'
     })
   }
 })
@@ -250,7 +250,7 @@ app.post('/vote/:voteId', (req, res, next) => {
 
   var userId = req.loginUser?.userId
 
-  console.log('投票时的用户id', userId)
+  // console.log('投票时的用户id', userId)
 
   // 如果用户未登陆，则不能投票
   if (!userId) {
@@ -291,7 +291,7 @@ app.post('/vote/:voteId', (req, res, next) => {
           })
           res.end() // 投票完成，直接结束
         }
-      } else {
+      } else {//公开多选
         // 非匿名投票，一次只投一个选项
         // 先看用户是否已经投过这个选项
         let voted = db.prepare('SELECT * FROM voteOptions WHERE userId = ? AND voteId = ? AND optionId = ?')
@@ -370,7 +370,7 @@ app.post('/vote/:voteId', (req, res, next) => {
 })
 
 
-
+//上传头像功能   暂未完成
 app.post('/upload', upload.any(), (req, res, next) => {
   var files = req.files
   console.log(files)
