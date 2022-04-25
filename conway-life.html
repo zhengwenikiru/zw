@@ -1,25 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
-
+<style>
+  #board{
+    margin: 0 auto;
+    width: 600px;
+    background-color: aquamarine;
+  }
+  footer{
+    width: 100%;
+    height: 100px;
+    background-color: bisque;
+    text-align: center;
+  }
+  p{
+    text-align: center;
+  }
+</style>
 <body>
-  <div id="world"></div>
-  <button onclick="next()">Next</button>
-  <button onclick="Auto()">AutoPlay</button>
-  density:<select id="density">
-    <option value="0.3">loose</option>
-    <option value="0.5">middle</option>
-    <option value="0.8">dense</option>
-  </select>
-
-
-
+  <div id="board">
+    <div id="world"></div>
+    <button onclick="next()">Next</button>
+    <button onclick="Auto()">AutoPlay</button>
+    density:<select id="density">
+      <option value="0.3">loose</option>
+      <option value="0.5">middle</option>
+      <option value="0.8">dense</option>
+      </select>
+  </div>
+  <p>游戏规则</p>
+  <footer>
+    (1)当前细胞为死亡状态时,当周围有3个存活细胞时,则迭代后该细胞变成存活状态(模拟繁殖);若原先为生,则保持不变。
+    (2)当前细胞为存活状态时,当周围的邻居细胞低于两个(不包含两个)存活时,该细胞变成死亡状态(模拟生命数量稀少)。
+    (3)当前细胞为存活状态时,当周围有两个或3个存活细胞时,该细胞保持原样。
+    (4)当前细胞为存活状态时,当周围有3个以上的存活细胞时,该细胞变成死亡状态(模拟生命数量过多)。
+    </footer>
 
   <script>
     class Conway {
@@ -55,7 +75,7 @@
         }
         this.world[row * this.width + col] = val
       }
-      //获取某行某列的alive邻居数(0为死亡，1为活着)
+      //获取某行某列的alive邻居数(0为死亡,1为活着)
       neibors(row, col) {
         var count = 0
         for (var r = row - 1; r <= row + 1; r++) {
@@ -68,13 +88,13 @@
 
       next() {
         var newWorld = new Array(this.width * this.height).fill(0)
-        for (var c = 0; c < this.width; c++) {//宽度为列数，每行遍历的次数
+        for (var c = 0; c < this.width; c++) {//宽度为列数,每行遍历的次数
           for (var r = 0; r < this.height; r++) {//高度为行数
             var current = this.get(r, c)//第r行c列的值
             var aliveNeighbors = this.neibors(r, c)
             if (current == 1) {
               if (aliveNeighbors < 2 || aliveNeighbors > 3) {
-                //死亡，无序修改
+                //死亡,无序修改
               } else {
                 newWorld[r * this.width + c] = 1
               }
@@ -93,7 +113,7 @@
         for (var r = 0; r < this.height; r++) {
           for (var c = 0; c < this.width; c++) {
             html += this.get(r, c) ? `<input type="checkbox" data-row="${r}" data-col="${c}" checked>` : `<input type="checkbox" data-row="${r}" data-col="${c}">`
-            //用到插值符号，所以用反引号更为便利
+            //用到插值符号,所以用反引号更为便利
           }
           html += '<br>'
         }
@@ -127,7 +147,7 @@
     }
     //自动运行
     var running = false
-    var autoId//声明在内部，则运行一次后下次函数访问不到
+    var autoId//声明在内部,则运行一次后下次函数访问不到
     function Auto() {
       if (running) {
         running = false
